@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8">
+  <!-- <link rel="icon" type="image/jpg" href="images/side_header.png"> -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/reset.css">
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+  <script src="https://www.gstatic.com/firebasejs/4.1.2/firebase.js"></script>
+  <script rel="javascript" type="text/javascript" src="js/other.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <title>Flash Card Fun!</title>
+</head>
+<body>
+  <!-- Nav Bar  -->
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="navFun">
+    <p id="mainHeader" class="pull-left">Flash Card Generator</p>
+    <div class="btn btn-warning pull-right" id="signInSecondary">Sign in Here</div>
+  </div>
+  <!-- This row will contain the two columsns which mkae up the whole site -->
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2" id="sideBar">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="sideBarBar">
+        <p id="miniHeader">Created Cards</p>
+        <div id="cardStorage">
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-10 col-lg-10" id="displayCardsBox">
+      <h3>What type of flash card would you like to create?</h3><br/>
+      <div id="basicInput">
+        <label for="example-text-input" class="col-2 col-form-label">Enter Data for Front of Card (Question)
+        </label>
+        <div class="col-4">
+          <input class="form-control" type="text" value="Enter Front of Card Data" id="frontCardData">
+        </div>
+        <label for="example-text-input" class="col-2 col-form-label">Enter Data for Back of Card (Answer)
+        </label>
+        <div class="col-4">
+          <input class="form-control" type="text" value="Enter Back of Card data" id="backCardData">
+        </div>
+      </div>
+      <div data-Choice='basic' data-toggle="tooltip" title="To create a basic card you simply enter the question on the front of the card and the answer on the back of the card." class='btn btn-success clickHerePlease' id='basicCardSelector'>Basic Card</div>
+      <div data-Choice='cloze' class='btn btn-warning clickHerePlease' data-toggle="tooltip" title="To create a cloze card you must put the exact full question as you wish it to appear, and for the answer it must be contained exactly in the question." id='clozeCardSelector'>Cloze Card</div>"
+    </div>
+  </div>
+</body>
+</html>

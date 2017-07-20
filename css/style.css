@@ -1,0 +1,62 @@
+#sideBar {
+  min-height: 500px;
+  border-right: 5px solid black;
+  padding:0;
+}
+#navFun {
+  height: 100px;
+  background-color: lightgray;
+}
+#mainHeader {
+  font-size: 45px;
+  letter-spacing: 10px;
+  margin-top: 1%;
+  margin-left: 14%;
+
+}
+#signInSecondary {
+  margin-top: 3%;
+}
+#sideBarBar {
+  height: 35px;
+  background-color: black;
+  border-bottom: 3px solid gray;
+  width:100%;
+}
+#miniHeader {
+  color: white;
+  font-size: 15px;
+  text-align: center;
+  margin-top: 1%;
+}
+.imgBorder {
+  border:2px solid black;
+}
+#displayCards {
+  margin-top: 10%;
+
+}
+#displayCardsBox {
+  background-image: url("../images/cardback2.jpg");
+  min-height: 500px;
+  background-size: cover;
+}
+.hide {
+  display:none;
+}
+label {
+  color:white;
+  text-align: center;
+}
+#displayCardsBox h3 {
+  color: white;
+  text-align: center;
+}
+#basicCardSelector {
+  margin-left: 34%;
+  margin-right: 10%;
+  margin-top: 5%;
+}
+#clozeCardSelector {
+  margin-top: 5%;
+}

@@ -1,0 +1,22 @@
+{
+  "name": "flashcard-generator",
+  "version": "1.0.0",
+  "description": "This will be a web app that will generate flashcards for you.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/901david/Flashcard-Generator.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/901david/Flashcard-Generator/issues"
+  },
+  "homepage": "https://github.com/901david/Flashcard-Generator#readme",
+  "dependencies": {
+    "express": "^4.15.3"
+  }
+}
