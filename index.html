@@ -4,6 +4,7 @@
 	<meta charset="UTF-8">
 	<!-- <link rel="icon" type="image/jpg" href="images/side_header.png"> -->
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="https://www.gstatic.com/firebasejs/4.1.3/firebase.js"></script>
   <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/reset.css">
 	<!-- Latest compiled and minified CSS -->
@@ -15,6 +16,48 @@
 	<title>Flash Card Fun!</title>
 </head>
 <body>
-<a href="mainPage.html"><h1 id="clickHere">Click Here to enter site, eventually this will be a login</h1></a>
+	<div class="col-lg-6 col-lg-offset-3">
+	<h1>Log In</h1>
+	<form>
+	  <div class="form-group">
+	    <label for="exampleInputEmail1">Email address</label>
+	    <input type="email" class="form-control" id="loginEmail" aria-describedby="emailHelp" placeholder="Enter email">
+	  </div>
+	  <div class="form-group">
+	    <label for="exampleInputPassword1">Password</label>
+	    <input type="password" class="form-control" id="loginPassword" placeholder="Password">
+	  </div>
+	  <div class="form-check">
+	    <label class="form-check-label">
+	      <input type="checkbox" class="form-check-input">
+	      I am not a Robot.
+	    </label>
+	  </div>
+	  <button type="submit" class="btn btn-primary" id="signInSubmit">Submit</button>
+	</form>
+	<hr>
+	<h1>Sign up</h1>
+	<form>
+	  <div class="form-group">
+	    <label for="exampleInputEmail1">Email address</label>
+	    <input type="email" class="form-control" id="signUpEmail" aria-describedby="emailHelp" placeholder="Enter email">
+	  </div>
+	  <div class="form-group">
+	    <label for="exampleInputPassword1">Password</label>
+	    <input type="password" class="form-control" id="signUpPassword" placeholder="Password">
+	  </div>
+		<div class="form-group">
+	    <label for="signUpPassword2">Verify Password</label>
+	    <input type="password" class="form-control" id="signUpPassword2" placeholder="Enter Pasword Again">
+	  </div>
+	  <div class="form-check">
+	    <label class="form-check-label">
+	      <input type="checkbox" class="form-check-input">
+	      I am not a Robot.
+	    </label>
+	  </div>
+	  <button type="submit" class="btn btn-primary">Submit</button>
+	</form>
+</div>
 </body>
 </html>

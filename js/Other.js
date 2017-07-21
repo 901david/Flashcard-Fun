@@ -1,20 +1,13 @@
-// const http = require('http')
-// const port = 8000
-//
-// const requestHandler = (request, response) => {
-//   console.log(request)
-//   response.end('This is a single response server.  Above, you can write, response.write(\'write something here...\');')
-// }
-//
-// const server = http.createServer(requestHandler)
-//
-// server.listen(port, (err) => {
-//   if (err) {
-//     return console.log('something bad happened', err)
-//   }
-//
-//   console.log(`server is listening on ${port}`)
-// });
+// Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyAZKSitFq3hRDPbGwjniZp6FKtxzKULXDE",
+    authDomain: "flashcard-fun.firebaseapp.com",
+    databaseURL: "https://flashcard-fun.firebaseio.com",
+    projectId: "flashcard-fun",
+    storageBucket: "",
+    messagingSenderId: "519025195872"
+  };
+  firebase.initializeApp(config);
 
 var variableNumber = 0;
 var cardCreatedArray = [];
