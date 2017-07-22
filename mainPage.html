@@ -18,7 +18,9 @@
   <!-- Nav Bar  -->
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="navFun">
     <p id="mainHeader" class="pull-left">Flash Card Generator</p>
+    <div id="topStuff">
     <div class="btn btn-warning pull-right" id="signInSecondary">Sign in Here</div>
+  </div>
   </div>
   <!-- This row will contain the two columsns which mkae up the whole site -->
   <div class="row">
@@ -35,17 +37,19 @@
         <label for="example-text-input" class="col-2 col-form-label">Enter Data for Front of Card (Question)
         </label>
         <div class="col-4">
-          <input class="form-control" type="text" value="Enter Front of Card Data" id="frontCardData">
+          <input class="form-control" type="text" value="" id="frontCardData">
         </div>
         <label for="example-text-input" class="col-2 col-form-label">Enter Data for Back of Card (Answer)
         </label>
         <div class="col-4">
-          <input class="form-control" type="text" value="Enter Back of Card data" id="backCardData">
+          <input class="form-control" type="text" value="" id="backCardData">
         </div>
       </div>
       <div data-Choice='basic' data-toggle="tooltip" title="To create a basic card you simply enter the question on the front of the card and the answer on the back of the card." class='btn btn-success clickHerePlease' id='basicCardSelector'>Basic Card</div>
-      <div data-Choice='cloze' class='btn btn-warning clickHerePlease' data-toggle="tooltip" title="To create a cloze card you must put the exact full question as you wish it to appear, and for the answer it must be contained exactly in the question." id='clozeCardSelector'>Cloze Card</div>"
+      <div data-Choice='cloze' class='btn btn-warning clickHerePlease' data-toggle="tooltip" title="To create a cloze card you must put the exact full question as you wish it to appear, and for the answer it must be contained exactly in the question." id='clozeCardSelector'>Cloze Card</div>
+      <div class='btn btn-success' data-toggle="tooltip" id='reviewCardSelector'>Review Cards</div>
     </div>
+
   </div>
 </body>
 </html>

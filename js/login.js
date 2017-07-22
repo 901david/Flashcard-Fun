@@ -11,23 +11,50 @@ firebase.initializeApp(config);
 var loginActive = true;
 
 $(document).ready(function() {
+  firebase.auth().onAuthStateChanged(function(user) {
+  if (user) {
+    console.log(user);
+  } else {
+    console.log("No user found");
+
+  }
+});
   $("#signInSubmit").click(function (event) {
     event.preventDefault();
-    var logEmail = $("#loginEmail").val();
-    var logPass = $("#loginPassword").val();
-    console.log(logEmail + " " + logPass);
+    var email = $("#loginEmail").val();
+    var password = $("#loginPassword").val();
+    firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
+
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      console.log(error.code + " " + error.message);
+    });
+    window.location.href="mainPage.html";
   });
   $("#canISignUp").click(function () {
-      let signUpHtml = '<h1>Sign up</h1><div class="form-group"><label for="signUpEmail">Email address</label><input type="email" class="form-control" id="signUpEmail" aria-describedby="emailHelp" placeholder="Enter email"></div><div class="form-group"><label for="signUpPassword">Password</label><input type="password" class="form-control" id="signUpPassword" placeholder="Password"></div><div class="form-group"><label for="signUpPassword2">Verify Password</label><input type="password" class="form-control" id="signUpPassword2" placeholder="Enter Pasword Again"></div><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input">I am not a Robot.</label></div><div type="submit" class="btn btn-primary" id="signUpSubmit">Submit</div>';
+      let signUpHtml = '<h1>Sign up</h1><div class="form-group"><label for="signUpEmail">Email address</label><input type="email" class="form-control" id="signUpEmail" aria-describedby="emailHelp" placeholder="Enter email"></div><div class="form-group"><label for="signUpPassword">Password</label><input type="password" class="form-control" id="signUpPassword" placeholder="Password"></div><div class="form-group"><label for="signUpPassword2">Verify Password</label><input type="password" class="form-control" id="signUpPassword2" placeholder="Enter Pasword Again"></div><div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input">I am not a Robot.</label></div><a href="../mainPage.html"><div type="submit" class="btn btn-primary" id="signUpSubmit">Sign Up</div></a>';
       $(".topText").addClass("hide");
+      $("#logSpace").empty();
       $("#indexDisplayArea").empty().append(signUpHtml);
       $("#signUpSubmit").click(function (event) {
         event.preventDefault();
-        var signEmail = $("#signUpEmail").val();
-        var signPass = $("#signUpPassword").val();
+        var email = $("#signUpEmail").val();
+        var password = $("#signUpPassword").val();
         var signPassTwo = $("#signUpPassword2").val();
-        if (signPass === signPassTwo) {
-          console.log(signEmail + " " + signPass + signPassTwo);
+        if (password === signPassTwo) {
+          firebase.auth().createUserWithEmailAndPassword(email, password)
+          .catch(function(error) {
+            // Handle Errors here.
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            if (errorCode == 'auth/weak-password') {
+              alert('The password is too weak.');
+            } else {
+              alert(errorMessage);
+              }
+              console.log(error);
+            });
+            window.location.href="mainPage.html";
         }
         else {
           alert("Your passwords did not match");
