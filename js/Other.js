@@ -100,6 +100,9 @@ $(document).ready(function() {
     console.log("No user found");
     userLogged = false;
     $("#topStuff").append('<div class="btn btn-warning pull-right" id="signInSecondary">Sign in Here</div>');
+    $("#signInSecondary").click(function () {
+      window.location.href="index.html";
+    });
 
   }
 });
