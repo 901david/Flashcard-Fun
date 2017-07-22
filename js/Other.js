@@ -31,27 +31,26 @@ function grabDataAndRun (){
       $("#cardStorage").empty();
       createSideBar();
     };
-    if(dataArg === "basic") {
-      whatVariableToUse(questionArg, answerArg);
-    }
-    else if (dataArg === "cloze") {
-      whatVariableToUse(questionArg, answerArg);
-    }
-    else {
-      console.log("This means something went fatally wrong.  Error.");
-    }
-
+    whatVariableToUse(questionArg, answerArg);
 });
 };
 function displayYourCard () {
-  $("#displayCardsBox").empty().append('<h1>Card' + currentIndexVal + '</h1><div class="btn btn-success pull-left" id="revealFront">Reveal Front of Card</div><div class="btn btn-danger pull-right" id="revealBack">Reveal Back of Card</div><div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="displayCards"><img src="images/indexfront.jpg" alt"Front of Index Card" class="img-responsive pull-left imgBorder"><img src="images/indexback.jpg" alt"Back of Index Card" class="img-responsive pull-right imgBorder"></div><div class="btn btn-primary" id="revealNext">Reveal the Next card</div>');
+  $("#displayCardsBox").empty().append('<h1>Card ' + currentIndexVal + '</h1><div class="btn btn-success pull-left" id="revealFront">Reveal Front of Card</div><div class="btn btn-danger pull-right" id="revealBack">Reveal Back of Card</div><div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="displayCards"><img src="images/indexfront.jpg" alt"Front of Index Card" class="img-responsive pull-left imgBorder"><img src="images/indexback.jpg" alt"Back of Index Card" class="img-responsive pull-right imgBorder"></div><div class="btn btn-primary" id="revealNext">Reveal the Next card</div>');
   $("#revealFront").click(function(){
+    if (cardCreatedArray[currentIndexVal-1].cardType === "basic") {
     $("#displayCards").prepend("<p>" + cardCreatedArray[currentIndexVal -1].front + "</p>");
-
-  });
+    }
+    else {
+      $("#displayCards").prepend("<p>" + (cardCreatedArray[currentIndexVal -1].front).replace(cardCreatedArray[currentIndexVal -1].back, "...") + "</p>");
+      };
+    });
   $("#revealBack").click(function(){
+    if (cardCreatedArray[currentIndexVal-1].cardType === "basic") {
     $("#displayCards").prepend("<p>" + cardCreatedArray[currentIndexVal -1].back + "</p>");
-
+    }
+    else {
+      $("#displayCards").prepend("<p>" + cardCreatedArray[currentIndexVal -1].front + "</p>");
+    }
   });
   $("#revealNext").click(function(){
     if (currentIndexVal < cardCreatedArray.length){
