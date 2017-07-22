@@ -15,7 +15,6 @@ var currentVariableName;
 var currentIndex = variableNumber - 1;
 
 
-
 // Determines what type of card to create based on which button is clicked.
 function grabDataAndRun (){
   $(".clickHerePlease").click(function() {

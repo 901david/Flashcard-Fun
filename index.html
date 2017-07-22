@@ -9,22 +9,23 @@
 	<link rel="stylesheet" type="text/css" href="css/reset.css">
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
+	<script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
 	<script src="https://www.gstatic.com/firebasejs/4.1.2/firebase.js"></script>
-	<script rel="javascript" type="text/javascript" src="js/app.js"></script>
-	<link rel="stylesheet" type="text/css" href="css/styleindex.css">
+	<script rel="javascript" type="text/javascript" src="js/login.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
 	<title>Flash Card Fun!</title>
 </head>
 <body>
+	<hr>
 	<div class="col-lg-6 col-lg-offset-3">
-	<h1>Log In</h1>
-	<form>
+	<h1 class="topText">Log In</h1>
+	<form id="indexDisplayArea">
 	  <div class="form-group">
-	    <label for="exampleInputEmail1">Email address</label>
+	    <label for="loginEmail">Email address</label>
 	    <input type="email" class="form-control" id="loginEmail" aria-describedby="emailHelp" placeholder="Enter email">
 	  </div>
 	  <div class="form-group">
-	    <label for="exampleInputPassword1">Password</label>
+	    <label for="loginPassword">Password</label>
 	    <input type="password" class="form-control" id="loginPassword" placeholder="Password">
 	  </div>
 	  <div class="form-check">
@@ -33,31 +34,13 @@
 	      I am not a Robot.
 	    </label>
 	  </div>
-	  <button type="submit" class="btn btn-primary" id="signInSubmit">Submit</button>
+		<div type="submit" class="btn btn-primary pull-left" id="signInSubmit">Submit</div>
 	</form>
-	<hr>
-	<h1>Sign up</h1>
-	<form>
-	  <div class="form-group">
-	    <label for="exampleInputEmail1">Email address</label>
-	    <input type="email" class="form-control" id="signUpEmail" aria-describedby="emailHelp" placeholder="Enter email">
-	  </div>
-	  <div class="form-group">
-	    <label for="exampleInputPassword1">Password</label>
-	    <input type="password" class="form-control" id="signUpPassword" placeholder="Password">
-	  </div>
-		<div class="form-group">
-	    <label for="signUpPassword2">Verify Password</label>
-	    <input type="password" class="form-control" id="signUpPassword2" placeholder="Enter Pasword Again">
-	  </div>
-	  <div class="form-check">
-	    <label class="form-check-label">
-	      <input type="checkbox" class="form-check-input">
-	      I am not a Robot.
-	    </label>
-	  </div>
-	  <button type="submit" class="btn btn-primary">Submit</button>
-	</form>
+	<div class="col-lg-12" id="logSpace">
+	<span id="memberText" class="pull-left">Not a member yet?  It's free!</span>
+	<div type="submit" class="btn btn-success pull-left" id="canISignUp">Sign Up</div>
 </div>
+</div>
+<hr>
 </body>
 </html>
