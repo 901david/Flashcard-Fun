@@ -17,9 +17,9 @@
 <body>
   <!-- Nav Bar  -->
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="navFun">
-    <p id="mainHeader" class="pull-left">Flash Card Generator</p>
+    <p id="mainHeader" class="pull-left">Flash Card Fun</p>
     <div id="topStuff">
-    <div class="btn btn-warning pull-right" id="signInSecondary">Sign in Here</div>
+    
   </div>
   </div>
   <!-- This row will contain the two columsns which mkae up the whole site -->
@@ -33,7 +33,7 @@
     </div>
     <div class="col-xs-12 col-sm-12 col-md-10 col-lg-10" id="displayCardsBox">
       <h3>What type of flash card would you like to create?</h3><br/>
-      <div id="basicInput">
+      <div id="basicInput" class="col-xs-12 col-sm-12 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
         <label for="example-text-input" class="col-2 col-form-label">Enter Data for Front of Card (Question)
         </label>
         <div class="col-4">
@@ -47,9 +47,11 @@
       </div>
       <div data-Choice='basic' data-toggle="tooltip" title="To create a basic card you simply enter the question on the front of the card and the answer on the back of the card." class='btn btn-success clickHerePlease' id='basicCardSelector'>Basic Card</div>
       <div data-Choice='cloze' class='btn btn-warning clickHerePlease' data-toggle="tooltip" title="To create a cloze card you must put the exact full question as you wish it to appear, and for the answer it must be contained exactly in the question." id='clozeCardSelector'>Cloze Card</div>
-      <div class='btn btn-success' data-toggle="tooltip" id='reviewCardSelector'>Review Cards</div>
+      <br><br><br>
+      <div class='btn btn-success col-lg-1 col-lg-offset-5' data-toggle="tooltip" id='reviewCardSelector'>Review</div>
     </div>
 
   </div>
+
 </body>
 </html>

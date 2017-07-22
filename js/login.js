@@ -8,12 +8,13 @@ var config = {
   messagingSenderId: "519025195872"
 };
 firebase.initializeApp(config);
-var loginActive = true;
 
 $(document).ready(function() {
   firebase.auth().onAuthStateChanged(function(user) {
   if (user) {
     console.log(user);
+    window.location.href="mainPage.html";
+
   } else {
     console.log("No user found");
 
@@ -28,7 +29,10 @@ $(document).ready(function() {
       var errorCode = error.code;
       var errorMessage = error.message;
       console.log(error.code + " " + error.message);
+
     });
+  });
+  $("#guestEnter").click(function () {
     window.location.href="mainPage.html";
   });
   $("#canISignUp").click(function () {
@@ -38,13 +42,13 @@ $(document).ready(function() {
       $("#indexDisplayArea").empty().append(signUpHtml);
       $("#signUpSubmit").click(function (event) {
         event.preventDefault();
-        var email = $("#signUpEmail").val();
-        var password = $("#signUpPassword").val();
-        var signPassTwo = $("#signUpPassword2").val();
+        let email = $("#signUpEmail").val();
+        let password = $("#signUpPassword").val();
+        let signPassTwo = $("#signUpPassword2").val();
         if (password === signPassTwo) {
           firebase.auth().createUserWithEmailAndPassword(email, password)
-          .catch(function(error) {
-            // Handle Errors here.
+            .catch(function(error) {
+            console.log()
             var errorCode = error.code;
             var errorMessage = error.message;
             if (errorCode == 'auth/weak-password') {
@@ -54,7 +58,6 @@ $(document).ready(function() {
               }
               console.log(error);
             });
-            window.location.href="mainPage.html";
         }
         else {
           alert("Your passwords did not match");

@@ -13,12 +13,17 @@ var variableNumber = 0;
 var cardCreatedArray = [{ front: "4+4", back: "8", cardType: "basic" }, { front: "4+3", back: "7", cardType: "basic" }, { front: "GW is pres", back: "GW", cardType: "cloze" }];
 var currentVariableName;
 var currentIndex = variableNumber - 1;
-var currentIndexVal = 1
+var currentIndexVal = 1;
+var userDirectory;
+var userLogged;
+
+
 
 
 // Determines what type of card to create based on which button is clicked.
 function grabDataAndRun (){
   $(".clickHerePlease").click(function() {
+    var regGroup = firebase.database().ref("/" + userDirectory + "/regular/");
     let questionArg = $("#frontCardData").val();
     let answerArg = $("#backCardData").val();
     let dataArg = $(this).attr("data-Choice");
@@ -26,7 +31,12 @@ function grabDataAndRun (){
     function whatVariableToUse (frontArg, backArg) {
       variableNumber++;
       currentVariableName = { front: frontArg, back: backArg, cardType: dataArg };
+      if (userLogged === true) {
+        regGroup.push(currentVariableName);
+      }
+      else {
       cardCreatedArray.push(currentVariableName);
+      }
       console.log(cardCreatedArray);
       $("#cardStorage").empty();
       createSideBar();
@@ -78,6 +88,21 @@ function createSideBar (){
 
 
 $(document).ready(function() {
+  firebase.auth().onAuthStateChanged(function(user) {
+  if (user) {
+    userDirectory = user.uid;
+    userLogged = true;
+    console.log(userDirectory);
+    $("#topStuff").append("<p>" + user.email + "</p><p>You are logged in.</p>");
+
+  }
+  else {
+    console.log("No user found");
+    userLogged = false;
+    $("#topStuff").append('<div class="btn btn-warning pull-right" id="signInSecondary">Sign in Here</div>');
+
+  }
+});
   $("#reviewCardSelector").click(function(){
     displayYourCard();
   });
