@@ -94,6 +94,15 @@ $(document).ready(function() {
     userLogged = true;
     console.log(userDirectory);
     $("#topStuff").append("<p>" + user.email + "</p><p>You are logged in.</p>");
+    $("#topStuff").append('<div class="btn btn-warning pull-right" id="signOutPeriod">Sign Out</div>');
+    $("#signOutPeriod").click(function (){
+      firebase.auth().signOut().then(function() {
+      alert("Sign out Successful");
+      location.reload();
+      }).catch(function(error) {
+      // An error happened.
+      });
+    });
 
   }
   else {
