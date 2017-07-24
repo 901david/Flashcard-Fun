@@ -35,7 +35,9 @@ function grabDataAndRun (){
     let questionArg = $("#frontCardData").val().trim();
     let answerArg = $("#backCardData").val().trim();
     let dataArg = $(this).attr("data-Choice");
-
+    if ((dataArg === "cloze") && (!(questionArg.includes(answerArg)))) {
+      alert("Your card was not formatted properly");
+    }
     $("#frontCardData").val("");
     $("#backCardData").val("");
     // Gives us a continuing variable scheme
