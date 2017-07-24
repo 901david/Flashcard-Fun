@@ -8,14 +8,16 @@
     messagingSenderId: "519025195872"
   };
   firebase.initializeApp(config);
-
+var userGroupInput = "";
+var listener = firebase.database().ref();
 var variableNumber = 0;
-var cardCreatedArray = [{ front: "4+4", back: "8", cardType: "basic" }, { front: "4+3", back: "7", cardType: "basic" }, { front: "GW is pres", back: "GW", cardType: "cloze" }];
+var cardCreatedArray = [];
+var fireCreatedArray = [];
 var currentVariableName;
 var currentIndex = variableNumber - 1;
 var currentIndexVal = 1;
 var userDirectory;
-var userLogged;
+var userLogged = false;
 
 
 
@@ -23,10 +25,19 @@ var userLogged;
 // Determines what type of card to create based on which button is clicked.
 function grabDataAndRun (){
   $(".clickHerePlease").click(function() {
-    var regGroup = firebase.database().ref("/" + userDirectory + "/regular/");
-    let questionArg = $("#frontCardData").val();
-    let answerArg = $("#backCardData").val();
+    if ($("#groupName").val().trim() === "") {
+      userGroupInput = "regular";
+    }
+    else {
+      userGroupInput = $("#groupName").val().trim();
+    }
+    var regGroup = firebase.database().ref("/" + userDirectory + "/" + userGroupInput + "/");
+    let questionArg = $("#frontCardData").val().trim();
+    let answerArg = $("#backCardData").val().trim();
     let dataArg = $(this).attr("data-Choice");
+
+    $("#frontCardData").val("");
+    $("#backCardData").val("");
     // Gives us a continuing variable scheme
     function whatVariableToUse (frontArg, backArg) {
       variableNumber++;
@@ -37,7 +48,6 @@ function grabDataAndRun (){
       else {
       cardCreatedArray.push(currentVariableName);
       }
-      console.log(cardCreatedArray);
       $("#cardStorage").empty();
       createSideBar();
     };
@@ -45,7 +55,7 @@ function grabDataAndRun (){
 });
 };
 function displayYourCard () {
-  $("#displayCardsBox").empty().append('<h1>Card ' + currentIndexVal + '</h1><div class="btn btn-success pull-left" id="revealFront">Reveal Front of Card</div><div class="btn btn-danger pull-right" id="revealBack">Reveal Back of Card</div><div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="displayCards"><img src="images/indexfront.jpg" alt"Front of Index Card" class="img-responsive pull-left imgBorder"><img src="images/indexback.jpg" alt"Back of Index Card" class="img-responsive pull-right imgBorder"></div><div class="btn btn-primary" id="revealNext">Reveal the Next card</div>');
+  $("#displayCardsBox").empty().append('<h1>Card ' + currentIndexVal + '</h1><div class="btn btn-success pull-left" id="revealFront">Reveal Front of Card</div><div class="btn btn-danger pull-right" id="revealBack">Reveal Back of Card</div><div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="displayCards"><img src="images/indexfront.jpg" alt"Front of Index Card" class="img-responsive pull-left imgBorder" id="cardFrontFlip"><img src="images/indexback.jpg" alt"Back of Index Card" class="img-responsive pull-right imgBorder"></div><div class="btn btn-primary" id="revealNext">Reveal the Next card</div>');
   $("#revealFront").click(function(){
     if (cardCreatedArray[currentIndexVal-1].cardType === "basic") {
     $("#displayCards").prepend("<p>" + cardCreatedArray[currentIndexVal -1].front + "</p>");
@@ -73,8 +83,8 @@ function displayYourCard () {
     }
   });
 };
-function createSideBar (){
-  if(!(cardCreatedArray === "")) {
+// This function will be used for local data
+function whatDataToUse () {
   for (let i = 0; i < cardCreatedArray.length;i++){
       $("#cardStorage").append("<div><p>Card " + (i + 1) + "</p><img data-index='" + (i + 1) + "' class='col-xs-3 col-sm-3 col-md-12 col-lg-12 img-responsive showCard' src='images/indexfront.jpg' alt='Index Card Place holder, click to view.'></div>");
   }
@@ -82,17 +92,33 @@ function createSideBar (){
     currentIndexVal = $(this).attr("data-index");
     displayYourCard();
     });
+};
+// This function will be used for firebase data
+function whatDataToUseFire () {
+for (let i = 0; i < fireCreatedArray.length; i++){
+  var fireModifiedArray = [];
+  fireModifiedArray.push(fireCreatedArray[i]);
+  console.log(fireModifiedArray);
+}
+};
+function createSideBar (){
+  if(userLogged === false) {
+    whatDataToUse();
+  }
+  else if (userLogged === true) {
+    whatDataToUseFire();
   }
 };
 
 
 
 $(document).ready(function() {
+  console.log(userLogged);
   firebase.auth().onAuthStateChanged(function(user) {
   if (user) {
     userDirectory = user.uid;
     userLogged = true;
-    console.log(userDirectory);
+    console.log(userLogged);
     $("#topStuff").append("<p>" + user.email + "</p><p>You are logged in.</p>");
     $("#topStuff").append('<div class="btn btn-warning pull-right" id="signOutPeriod">Sign Out</div>');
     $("#signOutPeriod").click(function (){
@@ -100,7 +126,7 @@ $(document).ready(function() {
       alert("Sign out Successful");
       location.reload();
       }).catch(function(error) {
-      // An error happened.
+      console.log("A fatal error occurred.");
       });
     });
 
@@ -114,6 +140,13 @@ $(document).ready(function() {
     });
 
   }
+});
+listener.on("child_added", function (snapshot) {
+
+  fireCreatedArray.push(snapshot.val());
+
+  // console.log(someTestArray);
+
 });
   $("#reviewCardSelector").click(function(){
     displayYourCard();
