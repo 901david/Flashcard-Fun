@@ -100,16 +100,6 @@ function whatDataToUse () {
     displayYourCard();
     });
 };
-// This function will be used for firebase data
-function whatDataToUseFire () {
-  for (let i = 0; i < fireCreatedArray.length; i+=2) {
-    for ( let j = 1; j < fireCreatedArray.length; j+=2) {
-      // i = array name, any way I can use that value to create an array named that?
-      console.log(fireCreatedArray[j]);
-
-    }
-  }
-};
 function createSideBar (){
   if(userLogged === false) {
     whatDataToUse();
@@ -119,7 +109,10 @@ function createSideBar (){
   }
 };
 
+// This function will be used for firebase data
+function whatDataToUseFire () {
 
+};
 
 $(document).ready(function() {
   firebase.auth().onAuthStateChanged(function(user) {
@@ -150,15 +143,18 @@ $(document).ready(function() {
 });
 listener.on("child_added", function (snapshot) {
   var someVar = snapshot.val();
+  var cardCount = 0;
   for (key in someVar) {
     var randomVarTest = someVar[key];
     for(innerKey in randomVarTest) {
-      // console.log(key);
-      // console.log(randomVarTest[innerKey]);
-      fireCreatedArray.push(randomVarTest[innerKey]);
+      console.log(key);
+      console.log(randomVarTest[innerKey]);
+      cardCount++;
+      $("#cardStorage").append("<div><p>Group: " + key + "</p><p>Card: " + cardCount + "</p><img data-index='" + cardCount + "' class='col-xs-3 col-sm-3 col-md-12 col-lg-12 img-responsive showCard' src='images/indexfront.jpg' alt='Index Card Place holder, click to view.'></div>");
+      // fireCreatedArray.push(key + ':' + randomVarTest[innerKey]);
     }
   }
-  console.log(fireCreatedArray);
+  // console.log(fireCreatedArray[0].key);
 });
   $("#reviewCardSelector").click(function(){
     displayYourCard();
