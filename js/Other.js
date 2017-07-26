@@ -13,6 +13,7 @@ var listener = firebase.database().ref();
 var variableNumber = 0;
 var cardCreatedArray = [];
 var fireCreatedArray = [];
+var keyCreatedArray = [];
 var currentVariableName;
 var currentIndex = variableNumber - 1;
 var currentIndexVal = 1;
@@ -25,6 +26,10 @@ var userLogged = false;
 // Determines what type of card to create based on which button is clicked.
 function grabDataAndRun (){
   $(".clickHerePlease").click(function() {
+    if ((userLogged === false) && (!($("#groupName").val().trim() === ""))) {
+      alert("Sorry, groups are only available for users that are signed in.");
+    }
+    else {
     if ($("#groupName").val().trim() === "") {
       userGroupInput = "regular";
     }
@@ -54,6 +59,7 @@ function grabDataAndRun (){
       createSideBar();
     };
     whatVariableToUse(questionArg, answerArg);
+  }
 });
 };
 function displayYourCard () {
@@ -97,11 +103,7 @@ function whatDataToUse () {
 };
 // This function will be used for firebase data
 function whatDataToUseFire () {
-for (let i = 0; i < fireCreatedArray.length; i++){
-  var fireModifiedArray = [];
-  fireModifiedArray.push(fireCreatedArray[i]);
-  console.log(fireModifiedArray);
-}
+  // need to create sidebar from here
 };
 function createSideBar (){
   if(userLogged === false) {
@@ -144,10 +146,13 @@ $(document).ready(function() {
   }
 });
 listener.on("child_added", function (snapshot) {
-
-  fireCreatedArray.push(snapshot.val());
-
-  // console.log(someTestArray);
+  var someVar = snapshot.val();
+  for (key in someVar) {
+    fireCreatedArray.push(key);
+    fireCreatedArray.push(someVar[key]);
+  }
+  console.log(fireCreatedArray);
+  console.log(keyCreatedArray);
 
 });
   $("#reviewCardSelector").click(function(){
