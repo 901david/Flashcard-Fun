@@ -151,6 +151,10 @@ listener.on("child_added", function (snapshot) {
       console.log(randomVarTest[innerKey]);
       cardCount++;
       $("#cardStorage").append("<div><p>Group: " + key + "</p><p>Card: " + cardCount + "</p><img data-index='" + cardCount + "' class='col-xs-3 col-sm-3 col-md-12 col-lg-12 img-responsive showCard' src='images/indexfront.jpg' alt='Index Card Place holder, click to view.'></div>");
+      $(".showCard").click(function() {
+      currentIndexVal = $(this).attr("data-index");
+      displayYourCard();
+      });
       // fireCreatedArray.push(key + ':' + randomVarTest[innerKey]);
     }
   }
