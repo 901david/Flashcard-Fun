@@ -13,7 +13,6 @@ var listener = firebase.database().ref();
 var variableNumber = 0;
 var cardCreatedArray = [];
 var fireCreatedArray = [];
-var keyCreatedArray = [];
 var currentVariableName;
 var currentIndex = variableNumber - 1;
 var currentIndexVal = 1;
@@ -103,7 +102,13 @@ function whatDataToUse () {
 };
 // This function will be used for firebase data
 function whatDataToUseFire () {
-  // need to create sidebar from here
+  for (let i = 0; i < fireCreatedArray.length; i+=2) {
+    for ( let j = 1; j < fireCreatedArray.length; j+=2) {
+      // i = array name, any way I can use that value to create an array named that?
+      console.log(fireCreatedArray[j]);
+
+    }
+  }
 };
 function createSideBar (){
   if(userLogged === false) {
@@ -117,12 +122,10 @@ function createSideBar (){
 
 
 $(document).ready(function() {
-  console.log(userLogged);
   firebase.auth().onAuthStateChanged(function(user) {
   if (user) {
     userDirectory = user.uid;
     userLogged = true;
-    console.log(userLogged);
     $("#topStuff").append("<p>" + user.email + "</p><p>You are logged in.</p>");
     $("#topStuff").append('<div class="btn btn-warning pull-right" id="signOutPeriod">Sign Out</div>');
     $("#signOutPeriod").click(function (){
@@ -148,12 +151,14 @@ $(document).ready(function() {
 listener.on("child_added", function (snapshot) {
   var someVar = snapshot.val();
   for (key in someVar) {
-    fireCreatedArray.push(key);
-    fireCreatedArray.push(someVar[key]);
+    var randomVarTest = someVar[key];
+    for(innerKey in randomVarTest) {
+      // console.log(key);
+      // console.log(randomVarTest[innerKey]);
+      fireCreatedArray.push(randomVarTest[innerKey]);
+    }
   }
   console.log(fireCreatedArray);
-  console.log(keyCreatedArray);
-
 });
   $("#reviewCardSelector").click(function(){
     displayYourCard();
