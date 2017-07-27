@@ -117,13 +117,27 @@ function createSideBar (){
 
 // This function will be used for firebase data
 function whatDataToUseFire () {
+  let prevKey = null;
   for (key in firebaseSnap) {
     firebaseSnapDeeper = firebaseSnap[key];
     for(innerKey in firebaseSnapDeeper) {
-      console.log(key);
-      console.log(firebaseSnapDeeper[innerKey]);
+      // console.log(key);
+      // console.log(firebaseSnapDeeper[innerKey]);
       cardCount++;
-      $("#cardStorage").append("<div><p>Group: " + key + "</p><p>Card: " + cardCount + "</p><img data-index='" + cardCount + "' class='col-xs-3 col-sm-3 col-md-12 col-lg-12 img-responsive showCard' src='images/indexfront.jpg' alt='Index Card Place holder, click to view.'></div>");
+
+      function includeOrNot () {
+        if (prevKey === key) {
+
+          $("#cardStorage").append("<div><p>Card: " + cardCount + "</p><img data-index='" + cardCount + "' class='col-xs-3 col-sm-3 col-md-12 col-lg-12 img-responsive showCard' src='images/indexfront.jpg' alt='Index Card Place holder, click to view.'></div>");
+        }
+        else if (prevKey !== key) {
+          $("#cardStorage").append("<div><p>Group: " + key + "</p><p>Card: " + cardCount + "</p><img data-index='" + cardCount + "' class='col-xs-3 col-sm-3 col-md-12 col-lg-12 img-responsive showCard' src='images/indexfront.jpg' alt='Index Card Place holder, click to view.'></div>");
+          prevKey = key;
+        }
+      };
+      includeOrNot();
+      console.log(prevKey);
+      console.log(key);
       $(".showCard").click(function() {
       currentIndexVal = $(this).attr("data-index");
       displayYourCard();
