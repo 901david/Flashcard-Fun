@@ -18,6 +18,12 @@ var currentIndex = variableNumber - 1;
 var currentIndexVal = 1;
 var userDirectory;
 var userLogged = false;
+var randomVarTest;
+var key;
+var cardCount = 0;
+var firebaseSnap;
+var firebaseSnapDeeper;
+var innerkey;
 
 
 
@@ -111,7 +117,19 @@ function createSideBar (){
 
 // This function will be used for firebase data
 function whatDataToUseFire () {
-
+  for (key in firebaseSnap) {
+    firebaseSnapDeeper = firebaseSnap[key];
+    for(innerKey in firebaseSnapDeeper) {
+      console.log(key);
+      console.log(firebaseSnapDeeper[innerKey]);
+      cardCount++;
+      $("#cardStorage").append("<div><p>Group: " + key + "</p><p>Card: " + cardCount + "</p><img data-index='" + cardCount + "' class='col-xs-3 col-sm-3 col-md-12 col-lg-12 img-responsive showCard' src='images/indexfront.jpg' alt='Index Card Place holder, click to view.'></div>");
+      $(".showCard").click(function() {
+      currentIndexVal = $(this).attr("data-index");
+      displayYourCard();
+      });
+    }
+  }
 };
 
 $(document).ready(function() {
@@ -142,23 +160,8 @@ $(document).ready(function() {
   }
 });
 listener.on("child_added", function (snapshot) {
-  var someVar = snapshot.val();
-  var cardCount = 0;
-  for (key in someVar) {
-    var randomVarTest = someVar[key];
-    for(innerKey in randomVarTest) {
-      console.log(key);
-      console.log(randomVarTest[innerKey]);
-      cardCount++;
-      $("#cardStorage").append("<div><p>Group: " + key + "</p><p>Card: " + cardCount + "</p><img data-index='" + cardCount + "' class='col-xs-3 col-sm-3 col-md-12 col-lg-12 img-responsive showCard' src='images/indexfront.jpg' alt='Index Card Place holder, click to view.'></div>");
-      $(".showCard").click(function() {
-      currentIndexVal = $(this).attr("data-index");
-      displayYourCard();
-      });
-      // fireCreatedArray.push(key + ':' + randomVarTest[innerKey]);
-    }
-  }
-  // console.log(fireCreatedArray[0].key);
+  firebaseSnap = snapshot.val();
+  whatDataToUseFire();
 });
   $("#reviewCardSelector").click(function(){
     displayYourCard();
