@@ -68,6 +68,7 @@ function grabDataAndRun (){
 });
 };
 function displayYourCard () {
+  if (userLogged === false) {
   $("#displayCardsBox").empty().append('<h1>Card ' + currentIndexVal + '</h1><div class="btn btn-success pull-left" id="revealFront">Reveal Front of Card</div><div class="btn btn-danger pull-right" id="revealBack">Reveal Back of Card</div><div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="displayCards"><img src="images/indexfront.jpg" alt"Front of Index Card" class="img-responsive pull-left imgBorder" id="cardFrontFlip"><img src="images/indexback.jpg" alt"Back of Index Card" class="img-responsive pull-right imgBorder"></div><div class="btn btn-primary" id="revealNext">Reveal the Next card</div>');
   $("#revealFront").click(function(){
     if (cardCreatedArray[currentIndexVal-1].cardType === "basic") {
@@ -95,6 +96,36 @@ function displayYourCard () {
       alert("No more cards to show currently");
     }
   });
+}
+else {
+    $("#displayCardsBox").empty().append('<h1>Card ' + cardCount + '</h1><div class="btn btn-success pull-left" id="revealFront">Reveal Front of Card</div><div class="btn btn-danger pull-right" id="revealBack">Reveal Back of Card</div><div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="displayCards"><img src="images/indexfront.jpg" alt"Front of Index Card" class="img-responsive pull-left imgBorder" id="cardFrontFlip"><img src="images/indexback.jpg" alt"Back of Index Card" class="img-responsive pull-right imgBorder"></div><div class="btn btn-primary" id="revealNext">Reveal the Next card</div>');
+    $("#revealFront").click(function(){
+      if (firebaseSnapDeeper[innerKey].cardType === "basic") {
+      $("#displayCards").prepend("<p>" + firebaseSnapDeeper[innerKey].front + "</p>");
+      }
+      else {
+        $("#displayCards").prepend("<p>" + (firebaseSnapDeeper[innerKey].front).replace(firebaseSnapDeeper[innerKey].back, "...") + "</p>");
+        };
+      });
+    $("#revealBack").click(function(){
+      if (firebaseSnapDeeper[innerKey].cardType === "basic") {
+      $("#displayCards").prepend("<p>" + firebaseSnapDeeper[innerKey].back + "</p>");
+      }
+      else {
+        $("#displayCards").prepend("<p>" + firebaseSnapDeeper[innerKey].front + "</p>");
+      }
+    });
+    $("#revealNext").click(function(){
+      if (currentIndexVal < cardCreatedArray.length){
+        $("#displayCards").empty();
+        currentIndexVal++;
+        displayYourCard();
+      }
+      else{
+        alert("No more cards to show currently");
+      }
+    });
+}
 };
 // This function will be used for local data
 function whatDataToUse () {
