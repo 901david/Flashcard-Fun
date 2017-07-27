@@ -116,14 +116,11 @@ else {
       }
     });
     $("#revealNext").click(function(){
-      if (currentIndexVal < cardCreatedArray.length){
+
         $("#displayCards").empty();
-        currentIndexVal++;
+        cardCount++;
         displayYourCard();
-      }
-      else{
-        alert("No more cards to show currently");
-      }
+
     });
 }
 };
@@ -133,7 +130,11 @@ function whatDataToUse () {
       $("#cardStorage").append("<div><p>Card " + (i + 1) + "</p><img data-index='" + (i + 1) + "' class='col-xs-3 col-sm-3 col-md-12 col-lg-12 img-responsive showCard' src='images/indexfront.jpg' alt='Index Card Place holder, click to view.'></div>");
   }
     $(".showCard").click(function() {
-    currentIndexVal = $(this).attr("data-index");
+      console.log("click");
+      if (userLogged ===false) {
+          currentIndexVal = $(this).attr("data-index");
+      }
+
     displayYourCard();
     });
 };
@@ -167,10 +168,8 @@ function whatDataToUseFire () {
         }
       };
       includeOrNot();
-      console.log(prevKey);
-      console.log(key);
       $(".showCard").click(function() {
-      currentIndexVal = $(this).attr("data-index");
+      cardCount = $(this).attr("data-index");
       displayYourCard();
       });
     }
