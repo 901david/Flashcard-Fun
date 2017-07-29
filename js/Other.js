@@ -25,10 +25,12 @@ var firebaseSnap;
 var firebaseSnapDeeper;
 var innerkey;
 
-
+var testFunArray = [{dinosaur: {typ: "message", message: "This is a test"}, craft: {type: "basic", message: "Some other text"}}];
+console.log(testFunArray);
 
 // Constructor function to create the arrays that will hold the firebase
 function BuildArrays (front, back, type, group) {
+  let cardTypeChecker = null;
     this.front = front;
     this.back = back;
     this.type = type;
