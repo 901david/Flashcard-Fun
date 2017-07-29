@@ -12,6 +12,57 @@
   var currentVariableName;
   var userGroupInput = "";
   var userDirectory;
+  var firebaseSnap;
+  var cardCreatedArray = [];
+  var currentIndexVal = 1;
+  function whatDataToUse () {
+    for (let i = 0; i < cardCreatedArray.length;i++){
+        $("#cardStorage").append("<div><p>Card " + (i + 1) + "</p><img data-index='" + (i + 1) + "' class='col-xs-3 col-sm-3 col-md-12 col-lg-12 img-responsive showCard' src='images/indexfront.jpg' alt='Index Card Place holder, click to view.'></div>");
+    }
+      $(".showCard").click(function() {
+        console.log("click");
+        if (userLogged ===false) {
+            currentIndexVal = $(this).attr("data-index");
+        }
+
+      displayYourCard();
+      });
+  };
+  function displayYourCard () {
+    $("#displayCardsBox").empty().append('<h1>Card ' + currentIndexVal + '</h1><div class="btn btn-success pull-left" id="revealFront">Reveal Front of Card</div><div class="btn btn-danger pull-right" id="revealBack">Reveal Back of Card</div><div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="displayCards"><img src="images/indexfront.jpg" alt"Front of Index Card" class="img-responsive pull-left imgBorder" id="cardFrontFlip"><img src="images/indexback.jpg" alt"Back of Index Card" class="img-responsive pull-right imgBorder"></div><div class="btn btn-primary" id="revealNext">Reveal the Next card</div>');
+    $("#revealFront").click(function(){
+      if (cardCreatedArray[currentIndexVal-1].cardType === "basic") {
+      $("#displayCards").prepend("<p>" + cardCreatedArray[currentIndexVal -1].front + "</p>");
+      }
+      else {
+        $("#displayCards").prepend("<p>" + (cardCreatedArray[currentIndexVal -1].front).replace(cardCreatedArray[currentIndexVal -1].back, "...") + "</p>");
+        };
+      });
+    $("#revealBack").click(function(){
+      if (cardCreatedArray[currentIndexVal-1].cardType === "basic") {
+      $("#displayCards").prepend("<p>" + cardCreatedArray[currentIndexVal -1].back + "</p>");
+      }
+      else {
+        $("#displayCards").prepend("<p>" + cardCreatedArray[currentIndexVal -1].front + "</p>");
+      }
+    });
+    $("#revealNext").click(function(){
+      if (currentIndexVal < cardCreatedArray.length){
+        $("#displayCards").empty();
+        currentIndexVal++;
+        displayYourCard();
+      }
+      else{
+        alert("No more cards to show currently");
+      }
+    });
+  };
+  function BuildArrays (front, back, type, group) {
+      this.front = front;
+      this.back = back;
+      this.type = type;
+      this.group = group;
+  };
   function grabDataAndRun (){
     $(".clickHerePlease").click(function() {
       let questionArg = $("#frontCardData").val().trim();
@@ -36,11 +87,24 @@
           regGroup.push(currentVariableName);
           console.log(currentVariableName);
         $("#cardStorage").empty();
+
         // createSideBar();
       };
       whatVariableToUse(questionArg, answerArg, dataArg, userGroupInput);
 
   });
+  };
+  function firesbaseGrabAndDistr () {
+    // let prevKey = null;
+    for (key in firebaseSnap) {
+      firebaseSnapDeeper = firebaseSnap[key];
+      for(innerKey in firebaseSnapDeeper) {
+        let currentCard = new BuildArrays(firebaseSnapDeeper[innerKey].front, firebaseSnapDeeper[innerKey].back, firebaseSnapDeeper[innerKey].cardType, firebaseSnapDeeper[innerKey].name);
+        cardCreatedArray.push(currentCard);
+      }
+    }
+    whatDataToUse();
+    // console.log(cardCreatedArray);
   };
 
   $(document).ready(function() {
@@ -69,6 +133,10 @@
       });
 
     }
+  });
+  listener.on("child_added", function (snapshot) {
+    firebaseSnap = snapshot.val();
+    firesbaseGrabAndDistr();
   });
   grabDataAndRun();
 });
