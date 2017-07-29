@@ -20,16 +20,12 @@
         $("#cardStorage").append("<div><p>Card " + (i + 1) + "</p><img data-index='" + (i + 1) + "' class='col-xs-3 col-sm-3 col-md-12 col-lg-12 img-responsive showCard' src='images/indexfront.jpg' alt='Index Card Place holder, click to view.'></div>");
     }
       $(".showCard").click(function() {
-        console.log("click");
-        if (userLogged ===false) {
-            currentIndexVal = $(this).attr("data-index");
-        }
-
+      currentIndexVal = $(this).attr("data-index");
       displayYourCard();
       });
   };
   function displayYourCard () {
-    $("#displayCardsBox").empty().append('<h1>Card ' + currentIndexVal + '</h1><div class="btn btn-success pull-left" id="revealFront">Reveal Front of Card</div><div class="btn btn-danger pull-right" id="revealBack">Reveal Back of Card</div><div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="displayCards"><img src="images/indexfront.jpg" alt"Front of Index Card" class="img-responsive pull-left imgBorder" id="cardFrontFlip"><img src="images/indexback.jpg" alt"Back of Index Card" class="img-responsive pull-right imgBorder"></div><div class="btn btn-primary" id="revealNext">Reveal the Next card</div>');
+    $("#displayCardsBox").empty().append('<h1>Group: ' + cardCreatedArray[currentIndexVal-1].group + '</h1><h1>Card ' + currentIndexVal + '</h1><div class="btn btn-success pull-left" id="revealFront">Reveal Front of Card</div><div class="btn btn-danger pull-right" id="revealBack">Reveal Back of Card</div><div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="displayCards"><img src="images/indexfront.jpg" alt"Front of Index Card" class="img-responsive pull-left imgBorder" id="cardFrontFlip"><img src="images/indexback.jpg" alt"Back of Index Card" class="img-responsive pull-right imgBorder"></div><div class="btn btn-primary" id="revealNext">Reveal the Next card</div><div class="btn btn-primary" id="revealPrev">Reveal the Previous card</div>');
     $("#revealFront").click(function(){
       if (cardCreatedArray[currentIndexVal-1].cardType === "basic") {
       $("#displayCards").prepend("<p>" + cardCreatedArray[currentIndexVal -1].front + "</p>");
@@ -39,6 +35,7 @@
         };
       });
     $("#revealBack").click(function(){
+      cardCreatedArray[currentIndexVal -1].back;
       if (cardCreatedArray[currentIndexVal-1].cardType === "basic") {
       $("#displayCards").prepend("<p>" + cardCreatedArray[currentIndexVal -1].back + "</p>");
       }
@@ -54,6 +51,16 @@
       }
       else{
         alert("No more cards to show currently");
+      }
+    });
+    $("#revealPrev").click(function () {
+      if (currentIndexVal === 1){
+        alert("You are already at the beginning.");
+      }
+      else{
+        $("#displayCards").empty();
+        currentIndexVal--;
+        displayYourCard();
       }
     });
   };
@@ -86,9 +93,6 @@
         currentVariableName = { front: frontArg, back: backArg, cardType: dataArg, name: catArg };
           regGroup.push(currentVariableName);
           console.log(currentVariableName);
-        $("#cardStorage").empty();
-
-        // createSideBar();
       };
       whatVariableToUse(questionArg, answerArg, dataArg, userGroupInput);
 
@@ -104,7 +108,7 @@
       }
     }
     whatDataToUse();
-    // console.log(cardCreatedArray);
+    console.log(cardCreatedArray);
   };
 
   $(document).ready(function() {
@@ -139,4 +143,8 @@
     firesbaseGrabAndDistr();
   });
   grabDataAndRun();
+  $("#reviewCardSelector").click(function(){
+    currentIndexVal = 1;
+    displayYourCard();
+  });
 });
