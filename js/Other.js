@@ -1,20 +1,20 @@
-// Initialize Firebase
-  var config = {
-    apiKey: "AIzaSyAZKSitFq3hRDPbGwjniZp6FKtxzKULXDE",
-    authDomain: "flashcard-fun.firebaseapp.com",
-    databaseURL: "https://flashcard-fun.firebaseio.com",
-    projectId: "flashcard-fun",
-    storageBucket: "",
-    messagingSenderId: "519025195872"
-  };
-  firebase.initializeApp(config);
-var userGroupInput = "";
-var listener = firebase.database().ref();
-var variableNumber = 0;
+// // Initialize Firebase
+//   var config = {
+//     apiKey: "AIzaSyAZKSitFq3hRDPbGwjniZp6FKtxzKULXDE",
+//     authDomain: "flashcard-fun.firebaseapp.com",
+//     databaseURL: "https://flashcard-fun.firebaseio.com",
+//     projectId: "flashcard-fun",
+//     storageBucket: "",
+//     messagingSenderId: "519025195872"
+//   };
+//   firebase.initializeApp(config);
+// var userGroupInput = "";
+// var listener = firebase.database().ref();
+
 var cardCreatedArray = [];
 var fireCreatedArray = [];
-var currentVariableName;
-var currentIndex = variableNumber - 1;
+// var currentVariableName;
+
 var currentIndexVal = 1;
 var userDirectory;
 var userLogged = false;
@@ -25,8 +25,7 @@ var firebaseSnap;
 var firebaseSnapDeeper;
 var innerkey;
 
-var testFunArray = [{dinosaur: {typ: "message", message: "This is a test"}, craft: {type: "basic", message: "Some other text"}}];
-console.log(testFunArray);
+
 
 // Constructor function to create the arrays that will hold the firebase
 function BuildArrays (front, back, type, group) {
@@ -40,44 +39,36 @@ function BuildArrays (front, back, type, group) {
     };
 };
 // Determines what type of card to create based on which button is clicked.
-function grabDataAndRun (){
-  $(".clickHerePlease").click(function() {
-    if ((userLogged === false) && (!($("#groupName").val().trim() === ""))) {
-      alert("Sorry, groups are only available for users that are signed in.");
-    }
-    else {
-    if ($("#groupName").val().trim() === "") {
-      userGroupInput = "regular";
-    }
-    else {
-      userGroupInput = $("#groupName").val().trim();
-    }
-    var regGroup = firebase.database().ref("/" + userDirectory + "/" + userGroupInput + "/");
-    let questionArg = $("#frontCardData").val().trim();
-    let answerArg = $("#backCardData").val().trim();
-    let dataArg = $(this).attr("data-Choice");
-    if ((dataArg === "cloze") && (!(questionArg.includes(answerArg)))) {
-      alert("Your card was not formatted properly");
-    }
-    $("#frontCardData").val("");
-    $("#backCardData").val("");
-    // Gives us a continuing variable scheme
-    function whatVariableToUse (frontArg, backArg) {
-      variableNumber++;
-      currentVariableName = { front: frontArg, back: backArg, cardType: dataArg };
-      if (userLogged === true) {
-        regGroup.push(currentVariableName);
-      }
-      else {
-      cardCreatedArray.push(currentVariableName);
-      }
-      $("#cardStorage").empty();
-      createSideBar();
-    };
-    whatVariableToUse(questionArg, answerArg);
-  }
-});
-};
+// function grabDataAndRun (){
+//   $(".clickHerePlease").click(function() {
+//     let regGroup = firebase.database().ref("/" + userDirectory + "/" + userGroupInput + "/");
+//     let questionArg = $("#frontCardData").val().trim();
+//     let answerArg = $("#backCardData").val().trim();
+//     let dataArg = $(this).attr("data-Choice");
+//     let cardNumArg = 0;
+//     if ($("#groupName").val().trim() === "") {
+//       userGroupInput = "standard";
+//     }
+//     else {
+//       userGroupInput = $("#groupName").val().trim();
+//     }
+//
+//     if ((dataArg === "cloze") && (!(questionArg.includes(answerArg)))) {
+//       alert("Your card was not formatted properly");
+//     }
+//     $("#frontCardData").val("");
+//     $("#backCardData").val("");
+//     // Gives us a continuing variable scheme
+//     function whatVariableToUse (frontArg, backArg, typeArg, numArg) {
+//       currentVariableName = { front: frontArg, back: backArg, cardType: dataArg, name: numArg };
+//         regGroup.push(currentVariableName);
+//       $("#cardStorage").empty();
+//       createSideBar();
+//     };
+//     whatVariableToUse(questionArg, answerArg, dataArg, cardNumArg);
+//
+// });
+// };
 function displayYourCard () {
   if (userLogged === false) {
   $("#displayCardsBox").empty().append('<h1>Card ' + currentIndexVal + '</h1><div class="btn btn-success pull-left" id="revealFront">Reveal Front of Card</div><div class="btn btn-danger pull-right" id="revealBack">Reveal Back of Card</div><div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="displayCards"><img src="images/indexfront.jpg" alt"Front of Index Card" class="img-responsive pull-left imgBorder" id="cardFrontFlip"><img src="images/indexback.jpg" alt"Back of Index Card" class="img-responsive pull-right imgBorder"></div><div class="btn btn-primary" id="revealNext">Reveal the Next card</div>');
@@ -189,33 +180,33 @@ function whatDataToUseFire () {
   }
 };
 
-$(document).ready(function() {
-  firebase.auth().onAuthStateChanged(function(user) {
-  if (user) {
-    userDirectory = user.uid;
-    userLogged = true;
-    $("#topStuff").append("<p>" + user.email + "</p><p>You are logged in.</p>");
-    $("#topStuff").append('<div class="btn btn-warning pull-right" id="signOutPeriod">Sign Out</div>');
-    $("#signOutPeriod").click(function (){
-      firebase.auth().signOut().then(function() {
-      alert("Sign out Successful");
-      location.reload();
-      }).catch(function(error) {
-      console.log("A fatal error occurred.");
-      });
-    });
-
-  }
-  else {
-    console.log("No user found");
-    userLogged = false;
-    $("#topStuff").append('<div class="btn btn-warning pull-right" id="signInSecondary">Sign in Here</div>');
-    $("#signInSecondary").click(function () {
-      window.location.href="index.html";
-    });
-
-  }
-});
+// $(document).ready(function() {
+//   firebase.auth().onAuthStateChanged(function(user) {
+//   if (user) {
+//     userDirectory = user.uid;
+//     userLogged = true;
+//     $("#topStuff").append("<p>" + user.email + "</p><p>You are logged in.</p>");
+//     $("#topStuff").append('<div class="btn btn-warning pull-right" id="signOutPeriod">Sign Out</div>');
+//     $("#signOutPeriod").click(function (){
+//       firebase.auth().signOut().then(function() {
+//       alert("Sign out Successful");
+//       location.reload();
+//       }).catch(function(error) {
+//       console.log("A fatal error occurred.");
+//       });
+//     });
+//
+//   }
+//   else {
+//     console.log("No user found");
+//     userLogged = false;
+//     $("#topStuff").append('<div class="btn btn-warning pull-right" id="signInSecondary">Sign in Here</div>');
+//     $("#signInSecondary").click(function () {
+//       window.location.href="index.html";
+//     });
+//
+//   }
+// });
 listener.on("child_added", function (snapshot) {
   firebaseSnap = snapshot.val();
   whatDataToUseFire();
@@ -225,4 +216,4 @@ listener.on("child_added", function (snapshot) {
   });
 grabDataAndRun(currentVariableName);
 createSideBar();
-});
+// });
