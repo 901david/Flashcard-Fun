@@ -16,7 +16,7 @@ var fireCreatedArray = [];
 // var currentVariableName;
 
 var currentIndexVal = 1;
-var userDirectory;
+// var userDirectory;
 var userLogged = false;
 var randomVarTest;
 var key;

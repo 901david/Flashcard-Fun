@@ -11,19 +11,19 @@
   var listener = firebase.database().ref();
   var currentVariableName;
   var userGroupInput = "";
+  var userDirectory;
   function grabDataAndRun (){
     $(".clickHerePlease").click(function() {
-      var regGroup = firebase.database().ref("/" + userDirectory + "/" + userGroupInput + "/");
       let questionArg = $("#frontCardData").val().trim();
       let answerArg = $("#backCardData").val().trim();
       let dataArg = $(this).attr("data-Choice");
-      let cardNumArg = 0;
       if ($("#groupName").val().trim() === "") {
         userGroupInput = "standard";
       }
       else {
         userGroupInput = $("#groupName").val().trim();
       }
+      let regGroup = firebase.database().ref("/" + userDirectory + "/" + userGroupInput + "/");
       console.log(userGroupInput);
       if ((dataArg === "cloze") && (!(questionArg.includes(answerArg)))) {
         alert("Your card was not formatted properly");
@@ -31,14 +31,14 @@
       $("#frontCardData").val("");
       $("#backCardData").val("");
       // Gives us a continuing variable scheme
-      function whatVariableToUse (frontArg, backArg, typeArg, numArg) {
-        currentVariableName = { front: frontArg, back: backArg, cardType: dataArg, name: numArg };
+      function whatVariableToUse (frontArg, backArg, typeArg, catArg) {
+        currentVariableName = { front: frontArg, back: backArg, cardType: dataArg, name: catArg };
           regGroup.push(currentVariableName);
           console.log(currentVariableName);
         $("#cardStorage").empty();
         // createSideBar();
       };
-      whatVariableToUse(questionArg, answerArg, dataArg, cardNumArg);
+      whatVariableToUse(questionArg, answerArg, dataArg, userGroupInput);
 
   });
   };
