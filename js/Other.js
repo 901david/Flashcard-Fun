@@ -27,7 +27,16 @@ var innerkey;
 
 
 
-
+// Constructor function to create the arrays that will hold the firebase
+function BuildArrays (front, back, type, group) {
+    this.front = front;
+    this.back = back;
+    this.type = type;
+    this.group = group;
+    this.createObjArray = function () {
+      fireCreatedArray.push({front: this.front, back: this.back, type: this.type, group: this.group});
+    };
+};
 // Determines what type of card to create based on which button is clicked.
 function grabDataAndRun (){
   $(".clickHerePlease").click(function() {
@@ -149,6 +158,7 @@ function createSideBar (){
 
 // This function will be used for firebase data
 function whatDataToUseFire () {
+  let fireArrayGroupOne = [];
   let prevKey = null;
   for (key in firebaseSnap) {
     firebaseSnapDeeper = firebaseSnap[key];
@@ -156,11 +166,12 @@ function whatDataToUseFire () {
       // console.log(key);
       // console.log(firebaseSnapDeeper[innerKey]);
       cardCount++;
-
+      fireArrayGroupOne.push({message: firebaseSnapDeeper[innerKey], type: key});
+      console.log(fireArrayGroupOne);
       function includeOrNot () {
         if (prevKey === key) {
 
-          $("#cardStorage").append("<div><p>Card: " + cardCount + "</p><img data-index='" + cardCount + "' class='col-xs-3 col-sm-3 col-md-12 col-lg-12 img-responsive showCard' src='images/indexfront.jpg' alt='Index Card Place holder, click to view.'></div>");
+          $("#cardStorage").append("<div><p>Card: " + cardCount + "</p><img data-index='" + cardCount + "' data-type='" + key + "' class='col-xs-3 col-sm-3 col-md-12 col-lg-12 img-responsive showCard' src='images/indexfront.jpg' alt='Index Card Place holder, click to view.'></div>");
         }
         else if (prevKey !== key) {
           $("#cardStorage").append("<div><p>Group: " + key + "</p><p>Card: " + cardCount + "</p><img data-index='" + cardCount + "' class='col-xs-3 col-sm-3 col-md-12 col-lg-12 img-responsive showCard' src='images/indexfront.jpg' alt='Index Card Place holder, click to view.'></div>");
