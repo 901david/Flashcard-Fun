@@ -1,22 +1,23 @@
 
 body {
-font-family: 'Bree Serif', serif
+font-family: 'Bree Serif', serif;
 }
 #sideBar {
-  min-height: 500px;
-  border-right: 5px solid black;
+  min-height: 1000px;
+  border-right: 5px solid #1A6D58;
   padding:0;
 }
 #navFun {
   height: 100px;
-  background-color: lightgray;
+  background-color: #1A6D58;
+  color: white;
+  border-bottom:5px solid black;
 }
 #mainHeader {
-  font-size: 75px;
-  letter-spacing: 35px;
-  margin-left: 20%;
+  font-size: 60px;
+  letter-spacing: 20px;
+  white-space: nowrap;
   font-family: 'Lobster', cursive;
-
 }
 #signInSecondary {
   margin-top: 3%;
@@ -24,7 +25,7 @@ font-family: 'Bree Serif', serif
 #sideBarBar {
   height: 35px;
   background-color: black;
-  border-bottom: 3px solid gray;
+  border-bottom: 3px solid #1A6D58;
   width:100%;
 }
 #miniHeader {
@@ -38,12 +39,12 @@ font-family: 'Bree Serif', serif
 }
 #displayCards {
   margin-top: 10%;
-
 }
 #displayCardsBox {
   background-image: url("../images/cardback2.jpg");
-  min-height: 500px;
+  min-height: 1000px;
   background-size: cover;
+  color:white;
 }
 .hide {
   display:none;
@@ -63,4 +64,8 @@ label {
 }
 #clozeCardSelector {
   margin-top: 5%;
+}
+#mainText {
+  margin-right: 10px;
+  margin-top: 25px;
 }

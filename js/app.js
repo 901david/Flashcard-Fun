@@ -25,23 +25,28 @@
       });
   };
   function displayYourCard () {
-    $("#displayCardsBox").empty().append('<h1>Group: ' + cardCreatedArray[currentIndexVal-1].group + '</h1><h1>Card ' + currentIndexVal + '</h1><div class="btn btn-success pull-left" id="revealFront">Reveal Front of Card</div><div class="btn btn-danger pull-right" id="revealBack">Reveal Back of Card</div><div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="displayCards"><img src="images/indexfront.jpg" alt"Front of Index Card" class="img-responsive pull-left imgBorder" id="cardFrontFlip"><img src="images/indexback.jpg" alt"Back of Index Card" class="img-responsive pull-right imgBorder"></div><div class="btn btn-primary" id="revealNext">Reveal the Next card</div><div class="btn btn-primary" id="revealPrev">Reveal the Previous card</div>');
+    $("#displayCardsBox").empty().append('<h1>Group: Dinosaur</h1><h1>Card ' + currentIndexVal + '</h1><div class="btn btn-success pull-left" id="revealFront">Reveal Front of Card</div><div class="btn btn-danger pull-right" id="revealBack">Reveal Back of Card</div><div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="displayCards"><img src="images/indexfront.jpg" alt"Front of Index Card" class="img-responsive pull-left imgBorder" id="cardFrontFlip"><img src="images/indexback.jpg" alt"Back of Index Card" class="img-responsive pull-right imgBorder" id="cardBackFlip"></div><div class="btn btn-primary" id="revealNext">Reveal the Next card</div><div class="btn btn-primary" id="revealPrev">Reveal the Previous card</div>');
     $("#revealFront").click(function(){
-      if (cardCreatedArray[currentIndexVal-1].cardType === "basic") {
-      $("#displayCards").prepend("<p>" + cardCreatedArray[currentIndexVal -1].front + "</p>");
-      }
-      else {
-        $("#displayCards").prepend("<p>" + (cardCreatedArray[currentIndexVal -1].front).replace(cardCreatedArray[currentIndexVal -1].back, "...") + "</p>");
-        };
+      setTimeout(()=>{
+        if (cardCreatedArray[currentIndexVal-1].cardType === "basic") {
+        $("#displayCards").prepend("<p>" + cardCreatedArray[currentIndexVal -1].front + "</p>");
+        }
+        else {
+          $("#displayCards").prepend("<p>" + (cardCreatedArray[currentIndexVal -1].front).replace(cardCreatedArray[currentIndexVal -1].back, "...") + "</p>");
+          };
+      }, 1000);
+      $("#cardFrontFlip").addClass("animated flip");
       });
     $("#revealBack").click(function(){
-      cardCreatedArray[currentIndexVal -1].back;
-      if (cardCreatedArray[currentIndexVal-1].cardType === "basic") {
-      $("#displayCards").prepend("<p>" + cardCreatedArray[currentIndexVal -1].back + "</p>");
-      }
-      else {
-        $("#displayCards").prepend("<p>" + cardCreatedArray[currentIndexVal -1].front + "</p>");
-      }
+      setTimeout(()=>{
+        if (cardCreatedArray[currentIndexVal-1].cardType === "basic") {
+        $("#displayCards").prepend("<p>" + cardCreatedArray[currentIndexVal -1].back + "</p>");
+        }
+        else {
+          $("#displayCards").prepend("<p>" + cardCreatedArray[currentIndexVal -1].front + "</p>");
+        }
+      }, 1000);
+      $("#cardBackFlip").addClass("animated flip");
     });
     $("#revealNext").click(function(){
       if (currentIndexVal < cardCreatedArray.length){
@@ -82,7 +87,6 @@
         userGroupInput = $("#groupName").val().trim();
       }
       let regGroup = firebase.database().ref("/" + userDirectory + "/" + userGroupInput + "/");
-      console.log(userGroupInput);
       if ((dataArg === "cloze") && (!(questionArg.includes(answerArg)))) {
         alert("Your card was not formatted properly");
       }
@@ -91,7 +95,6 @@
       function whatVariableToUse (frontArg, backArg, typeArg, catArg) {
         currentVariableName = { front: frontArg, back: backArg, cardType: dataArg, name: catArg };
           regGroup.push(currentVariableName);
-          console.log(currentVariableName);
       };
       whatVariableToUse(questionArg, answerArg, dataArg, userGroupInput);
 
@@ -116,25 +119,18 @@
       userDirectory = user.uid;
       userLogged = true;
       $("#topStuff").append("<p>" + user.email + "</p><p>You are logged in.</p>");
-      $("#topStuff").append('<div class="btn btn-warning pull-right" id="signOutPeriod">Sign Out</div>');
+      $("#topStuff").append('<div class="btn btn-warning" id="signOutPeriod">Sign Out</div>');
       $("#signOutPeriod").click(function (){
         firebase.auth().signOut().then(function() {
         alert("Sign out Successful");
-        location.reload();
+        window.location.href="index.html";
         }).catch(function(error) {
         console.log("A fatal error occurred.");
         });
       });
-
     }
     else {
       console.log("No user found");
-      userLogged = false;
-      $("#topStuff").append('<div class="btn btn-warning pull-right" id="signInSecondary">Sign in Here</div>');
-      $("#signInSecondary").click(function () {
-        window.location.href="index.html";
-      });
-
     }
   });
   listener.on("child_added", function (snapshot) {
