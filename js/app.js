@@ -88,7 +88,6 @@
       }
       $("#frontCardData").val("");
       $("#backCardData").val("");
-      // Gives us a continuing variable scheme
       function whatVariableToUse (frontArg, backArg, typeArg, catArg) {
         currentVariableName = { front: frontArg, back: backArg, cardType: dataArg, name: catArg };
           regGroup.push(currentVariableName);

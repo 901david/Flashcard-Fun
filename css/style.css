@@ -1,3 +1,7 @@
+
+body {
+font-family: 'Bree Serif', serif
+}
 #sideBar {
   min-height: 500px;
   border-right: 5px solid black;
@@ -8,10 +12,10 @@
   background-color: lightgray;
 }
 #mainHeader {
-  font-size: 45px;
-  letter-spacing: 10px;
-  margin-top: 1%;
-  margin-left: 14%;
+  font-size: 75px;
+  letter-spacing: 35px;
+  margin-left: 20%;
+  font-family: 'Lobster', cursive;
 
 }
 #signInSecondary {
