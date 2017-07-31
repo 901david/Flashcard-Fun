@@ -35,7 +35,8 @@
       });
   };
   function displayYourCard () {
-    $("#displayCardsBox").empty().append('<div class="row"><span class="topDisplayText">Group: ' + cardCreatedArray[currentIndexVal -1].group + '</span><span class="topDisplayTextTwo">Card ' + currentIndexVal + '</span></div><div class="row"><div class="btn btn-success topDisplayButt" id="revealFront">Reveal Front of Card</div><div class="btn btn-danger topDisplayButtTwo" id="revealBack">Reveal Back of Card</div></div><div class="row"></div><div class="row"><div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="displayCards"><img src="images/indexfront.jpg" alt"Front of Index Card" class="img-responsive pull-left imgBorder" id="cardFrontFlip"><img src="images/indexback.jpg" alt"Back of Index Card" class="img-responsive imgBorderTwo pull-left" id="cardBackFlip"></div></div><div class="row"><div class="btn btn-primary" id="revealNext">Reveal the Next card</div><div class="btn btn-primary" id="revealPrev">Reveal the Previous card</div></div>');
+    // Need to put each set in its on div that takes up half the page
+    $("#displayCardsBox").empty().append('<div class="row"><span class="topDisplayText">Group: ' + cardCreatedArray[currentIndexVal -1].group + '</span><span class="topDisplayTextTwo">Card ' + currentIndexVal + '</span></div><div class="row"><div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"><div class="btn btn-success topDisplayButt" id="revealFront">Reveal Front of Card</div><div class="btn btn-danger topDisplayButtTwo" id="revealBack">Reveal Back of Card</div></div><div id="displayAns"></div><div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="displayCards"><img src="images/indexfront.jpg" alt"Front of Index Card" class="img-responsive pull-left imgBorder" id="cardFrontFlip"><img src="images/indexback.jpg" alt"Back of Index Card" class="img-responsive imgBorderTwo pull-left" id="cardBackFlip"></div><div class="btn btn-primary" id="revealNext">Reveal the Next card</div><div class="btn btn-primary" id="revealPrev">Reveal the Previous card</div>');
     $("#revealFront").click(function(){
       setTimeout(()=>{
         if (cardCreatedArray[currentIndexVal-1].cardType === "basic") {
@@ -48,7 +49,7 @@
       $("#cardFrontFlip").addClass("animated flip");
       });
     $("#revealBack").click(function(){
-      
+
       setTimeout(()=>{
         if (cardCreatedArray[currentIndexVal-1].cardType === "basic") {
         $("#displayCards").prepend("<p>" + cardCreatedArray[currentIndexVal -1].back + "</p>");

@@ -104,3 +104,14 @@ label {
   padding-left: 20px;
   padding-right: 20px;
 }
+#displayAns {
+  background-color: white;
+  margin-left: 18%;
+  margin-top: 3%;
+  width:299px;
+  height:202px;
+  padding:0;
+}
+#cardFrontFlip {
+  margin-bottom: 3%;
+}
