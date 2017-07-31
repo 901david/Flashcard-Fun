@@ -36,6 +36,11 @@ font-family: 'Bree Serif', serif;
 }
 .imgBorder {
   border:2px solid black;
+  margin-left: 13%;
+}
+.imgBorderTwo {
+  border:2px solid black;
+  margin-left: 15%;
 }
 #displayCards {
   margin-top: 10%;
@@ -68,4 +73,34 @@ label {
 #mainText {
   margin-right: 10px;
   margin-top: 25px;
+}
+.cardBorder {
+  border: 3px solid yellow;
+  margin:0;
+  padding:0;
+}
+.topDisplayText {
+  margin-left: 20%;
+  padding-left: 20px;
+  padding-right: 20px;
+  font-size: 45px
+
+}
+.topDisplayTextTwo {
+  margin-left: 20%;
+  padding-left: 20px;
+  padding-right: 20px;
+  font-size: 45px
+}
+.topDisplayButt {
+  margin-left: 22%;
+  margin-top: 5%;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+.topDisplayButtTwo {
+  margin-left: 30%;
+  margin-top: 5%;
+  padding-left: 20px;
+  padding-right: 20px;
 }
