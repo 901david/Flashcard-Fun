@@ -19,12 +19,14 @@
   function whatDataToUse () {
 
     for (let i = 0; i < cardCreatedArray.length;i++){
-        if (cardCreatedArray[currentIndexVal -1].group === prevGroup){
-          $("#cardStorage").append("<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12'><p>Card " + (i + 1) + "</p><img data-index='" + (i + 1) + "' class='col-xs-3 col-sm-3 col-md-8 col-lg-8 img-responsive showCard' src='images/indexfront.jpg' alt='Index Card Place holder, click to view.'></div>");
+        if (cardCreatedArray[i].group === prevGroup){
+          $("#cardStorage").append("<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12'><p class='cardSidebarText'>Card " + (i + 1) + "</p><img data-index='" + (i + 1) + "' class='col-xs-3 col-sm-3 col-md-8 col-lg-8 img-responsive showCard' src='images/indexfront.jpg' alt='Index Card Place holder, click to view.'></div>");
+          console.log(prevGroup);
         }
         else {
-          $("#cardStorage").append("<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12'><p>Group: " + cardCreatedArray[currentIndexVal -1].group + "<p>Card " + (i + 1) + "</p><img data-index='" + (i + 1) + "' class='col-xs-3 col-sm-3 col-md-8 col-lg-8 img-responsive showCard' src='images/indexfront.jpg' alt='Index Card Place holder, click to view.'></div>");
-          prevGroup = cardCreatedArray[currentIndexVal -1].group;
+          $("#cardStorage").append("<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12'><p class='cardSidebarGroup'>Group: " + cardCreatedArray[i].group + "<p class='cardSidebarText'>Card " + (i + 1) + "</p><img data-index='" + (i + 1) + "' class='col-xs-3 col-sm-3 col-md-8 col-lg-8 img-responsive showCard' src='images/indexfront.jpg' alt='Index Card Place holder, click to view.'></div>");
+          prevGroup = cardCreatedArray[i].group;
+          console.log(prevGroup);
         }
     }
       $(".showCard").click(function() {
@@ -35,9 +37,13 @@
       displayYourCard();
       });
   };
+  // Controls display while reviewing cards
   function displayYourCard () {
 
-    $("#displayCardsBox").empty().append('<div class="row"><p class="topDisplayText">Group: ' + cardCreatedArray[currentIndexVal -1].group + '</p><p class="topDisplayTextTwo">Card ' + currentIndexVal + '</p><div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" id="leftSideCards"><div class="btn btn-success topDisplayButt" id="revealFront">Reveal Front of Card</div><div id="displayAnsLeft"></div><div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="displayCardsLeft"><img src="images/indexfront.jpg" alt="Front of Index Card" class="img-responsive imgBorder" id="cardFrontFlip"></div><div class="btn btn-primary" id="revealPrev">Reveal the Previous card</div></div><div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" id="rightSideCards"><div class="btn btn-danger topDisplayButtTwo" id="revealBack">Reveal Back of Card</div><div id="displayAnsRight"></div><div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="displayCardsRight"><img src="images/indexback.jpg" alt="Back of Index Card" class="img-responsive imgBorderTwo" id="cardBackFlip"></div><div class="btn btn-primary" id="revealNext">Reveal the Next card</div></div></div>');
+    $("#displayCardsBox").empty().append('<div id="moreQuestionsPlease"><span class="glyphicon glyphicon-menu-left"></span>Create More Cards</div><div id="displayAnsRight"></div><div class="row"><p class="topDisplayText">Group: ' + cardCreatedArray[currentIndexVal -1].group + '</p><p class="topDisplayTextTwo">Card ' + currentIndexVal + '</p><div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" id="leftSideCards"><div class="btn btn-success topDisplayButt" id="revealFront">Reveal Front of Card</div><div id="displayAnsLeft"></div><div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="displayCardsLeft"><img src="images/indexfront.jpg" alt="Front of Index Card" class="img-responsive imgBorder" id="cardFrontFlip"></div><div class="btn btn-primary" id="revealPrev">Reveal the Previous card</div></div><div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" id="rightSideCards"><div class="btn btn-danger topDisplayButtTwo" id="revealBack">Reveal Back of Card</div><div id="displayAnsRight"></div><div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="displayCardsRight"><img src="images/indexback.jpg" alt="Back of Index Card" class="img-responsive imgBorderTwo" id="cardBackFlip"></div><div class="btn btn-primary" id="revealNext">Reveal the Next card</div></div></div>');
+    $("#moreQuestionsPlease").click(()=>{
+      window.location.href="mainPage.html";
+    })
     $("#revealFront").click(function(){
       setTimeout(()=>{
         if (cardCreatedArray[currentIndexVal-1].type === "basic") {
@@ -169,8 +175,13 @@
 
   grabDataAndRun();
   $("#reviewCardSelector").click(function(){
+    if (cardCreatedArray.length > 0) {
     currentIndexVal = 1;
     $('*[data-index=' + currentIndexVal + ']').addClass("animated flip cardBorder");
     displayYourCard();
-  });
+    }
+    else {
+      alert("No cards to review");
+    }
+});
 });

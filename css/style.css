@@ -52,6 +52,7 @@ font-family: 'Bree Serif', serif;
 .hide {
   display:none;
 }
+
 label {
   color:white;
   text-align: center;
@@ -184,4 +185,15 @@ label {
   color:black;
   padding:10px;
   margin-top: 1%;
+}
+.cardSidebarText {
+  margin-left: 24%;
+  margin-top: 2%;
+  font-size: 14px;
+}
+.cardSidebarGroup {
+  margin-left: 9%;
+  margin-top: 2%;
+  font-size: 18px;
+  font-weight: bold;
 }
