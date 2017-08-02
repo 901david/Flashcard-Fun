@@ -41,10 +41,10 @@
     $("#revealFront").click(function(){
       setTimeout(()=>{
         if (cardCreatedArray[currentIndexVal-1].cardType === "basic") {
-        $("#displayCardsLeft").prepend("<p>" + cardCreatedArray[currentIndexVal -1].front + "</p>");
+        $("#displayCardsLeft").prepend("<div class='cardAnswerBoxLeft'><p>" + cardCreatedArray[currentIndexVal -1].front + "</p></div>");
         }
         else {
-          $("#displayCardsLeft").prepend("<p>" + (cardCreatedArray[currentIndexVal -1].front).replace(cardCreatedArray[currentIndexVal -1].back, "...") + "</p>");
+          $("#displayCardsLeft").prepend("<div class='cardAnswerBoxLeft'><p class='answerDisplay'>" + (cardCreatedArray[currentIndexVal -1].front).replace(cardCreatedArray[currentIndexVal -1].back, "...") + "</p></div>");
           };
       }, 1000);
       $("#cardFrontFlip").addClass("animated flip");
@@ -53,10 +53,10 @@
 
       setTimeout(()=>{
         if (cardCreatedArray[currentIndexVal-1].cardType === "basic") {
-        $("#displayCardsRight").prepend("<p>" + cardCreatedArray[currentIndexVal -1].back + "</p>");
+        $("#displayCardsRight").prepend("<div class='cardAnswerBoxRight'><p class='answerDisplay'>" + cardCreatedArray[currentIndexVal -1].back + "</p></div>");
         }
         else {
-          $("#displayCardsRight").prepend("<p>" + cardCreatedArray[currentIndexVal -1].front + "</p>");
+          $("#displayCardsRight").prepend("<div class='cardAnswerBoxRight'><p class='answerDisplay'>" + cardCreatedArray[currentIndexVal -1].front + "</p></div");
         }
       }, 1000);
       $("#cardBackFlip").addClass("animated flip");
