@@ -42,9 +42,7 @@ font-family: 'Bree Serif', serif;
   border:2px solid black;
   margin-left: 15%;
 }
-#displayCards {
-  margin-top: 10%;
-}
+
 #displayCardsBox {
   background-image: url("../images/cardback2.jpg");
   min-height: 1000px;
@@ -80,16 +78,12 @@ label {
   padding:0;
 }
 .topDisplayText {
-  margin-left: 20%;
-  padding-left: 20px;
-  padding-right: 20px;
+  text-align: center;
   font-size: 45px
 
 }
 .topDisplayTextTwo {
-  margin-left: 20%;
-  padding-left: 20px;
-  padding-right: 20px;
+  text-align: center;
   font-size: 45px
 }
 .topDisplayButt {
@@ -114,4 +108,44 @@ label {
 }
 #cardFrontFlip {
   margin-bottom: 3%;
+}
+#cardBackFlip {
+  margin-bottom: 3%;
+}
+#introText {
+  font-style: italic;
+  font-size: 14px;
+  font-family: cursive;
+}
+#mainIndex {
+  background-image: url('../images/indexbackground.jpg');
+  min-height: 750px;
+  color: white;
+}
+.jumbotron {
+  margin-top: 5%;
+  color:black;
+  background-color: white;
+}
+#logSpace {
+  margin-top: 5%;
+}
+#canISignUp {
+  margin-left: 5%;
+}
+#revealFront {
+  margin-left:32%;
+  margin-bottom: 1%;
+}
+#revealBack {
+  margin-left:34%;
+  margin-bottom: 1%;
+}
+#revealNext {
+  margin-left:34%;
+  margin-top: 1%;
+}
+#revealPrev {
+  margin-left:32%;
+  margin-top: 1%;
 }

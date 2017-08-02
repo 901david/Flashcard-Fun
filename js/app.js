@@ -8,10 +8,10 @@
     messagingSenderId: "519025195872"
   };
   firebase.initializeApp(config);
-  var listener = firebase.database().ref();
+  var listener = firebase.database().ref(userDirectory);
+  var userDirectory = null;
   var currentVariableName;
   var userGroupInput = "";
-  var userDirectory;
   var firebaseSnap;
   var cardCreatedArray = [];
   var currentIndexVal = 1;
@@ -31,19 +31,20 @@
       $(".showCard").removeClass("animated flip cardBorder");
       currentIndexVal = $(this).attr("data-index");
       $(this).addClass("animated flip cardBorder");
+      // console.log(currentIndexVal);
       displayYourCard();
       });
   };
   function displayYourCard () {
-    // Need to put each set in its on div that takes up half the page
-    $("#displayCardsBox").empty().append('<div class="row"><span class="topDisplayText">Group: ' + cardCreatedArray[currentIndexVal -1].group + '</span><span class="topDisplayTextTwo">Card ' + currentIndexVal + '</span></div><div class="row"><div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"><div class="btn btn-success topDisplayButt" id="revealFront">Reveal Front of Card</div><div class="btn btn-danger topDisplayButtTwo" id="revealBack">Reveal Back of Card</div></div><div id="displayAns"></div><div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="displayCards"><img src="images/indexfront.jpg" alt"Front of Index Card" class="img-responsive pull-left imgBorder" id="cardFrontFlip"><img src="images/indexback.jpg" alt"Back of Index Card" class="img-responsive imgBorderTwo pull-left" id="cardBackFlip"></div><div class="btn btn-primary" id="revealNext">Reveal the Next card</div><div class="btn btn-primary" id="revealPrev">Reveal the Previous card</div>');
+
+    $("#displayCardsBox").empty().append('<div class="row"><p class="topDisplayText">Group: ' + cardCreatedArray[currentIndexVal -1].group + '</p><p class="topDisplayTextTwo">Card ' + currentIndexVal + '</p><div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" id="leftSideCards"><div class="btn btn-success topDisplayButt" id="revealFront">Reveal Front of Card</div><div id="displayAnsLeft"></div><div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="displayCardsLeft"><img src="images/indexfront.jpg" alt="Front of Index Card" class="img-responsive imgBorder" id="cardFrontFlip"></div><div class="btn btn-primary" id="revealPrev">Reveal the Previous card</div></div><div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" id="rightSideCards"><div class="btn btn-danger topDisplayButtTwo" id="revealBack">Reveal Back of Card</div><div id="displayAnsRight"></div><div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="displayCardsRight"><img src="images/indexback.jpg" alt="Back of Index Card" class="img-responsive imgBorderTwo" id="cardBackFlip"></div><div class="btn btn-primary" id="revealNext">Reveal the Next card</div></div></div>');
     $("#revealFront").click(function(){
       setTimeout(()=>{
         if (cardCreatedArray[currentIndexVal-1].cardType === "basic") {
-        $("#displayCards").prepend("<p>" + cardCreatedArray[currentIndexVal -1].front + "</p>");
+        $("#displayCardsLeft").prepend("<p>" + cardCreatedArray[currentIndexVal -1].front + "</p>");
         }
         else {
-          $("#displayCards").prepend("<p>" + (cardCreatedArray[currentIndexVal -1].front).replace(cardCreatedArray[currentIndexVal -1].back, "...") + "</p>");
+          $("#displayCardsLeft").prepend("<p>" + (cardCreatedArray[currentIndexVal -1].front).replace(cardCreatedArray[currentIndexVal -1].back, "...") + "</p>");
           };
       }, 1000);
       $("#cardFrontFlip").addClass("animated flip");
@@ -52,10 +53,10 @@
 
       setTimeout(()=>{
         if (cardCreatedArray[currentIndexVal-1].cardType === "basic") {
-        $("#displayCards").prepend("<p>" + cardCreatedArray[currentIndexVal -1].back + "</p>");
+        $("#displayCardsRight").prepend("<p>" + cardCreatedArray[currentIndexVal -1].back + "</p>");
         }
         else {
-          $("#displayCards").prepend("<p>" + cardCreatedArray[currentIndexVal -1].front + "</p>");
+          $("#displayCardsRight").prepend("<p>" + cardCreatedArray[currentIndexVal -1].front + "</p>");
         }
       }, 1000);
       $("#cardBackFlip").addClass("animated flip");
@@ -63,22 +64,27 @@
     $("#revealNext").click(function(){
       $(".showCard").removeClass("animated flip cardBorder");
       if (currentIndexVal < cardCreatedArray.length){
-        $("#displayCards").empty();
+        $("#displayCardsLeft").empty();
+        $("#displayCardsRight").empty();
         currentIndexVal++;
         $('*[data-index=' + currentIndexVal + ']').addClass("animated flip cardBorder");
         displayYourCard();
       }
       else{
         alert("No more cards to show currently");
+        $('*[data-index=' + currentIndexVal + ']').addClass("cardBorder");
       }
     });
     $("#revealPrev").click(function () {
+      console.log(currentIndexVal);
       $(".showCard").removeClass("animated flip cardBorder");
-      if (currentIndexVal === 1){
+      if (currentIndexVal <= 1){
         alert("You are already at the beginning.");
+        $('*[data-index=' + currentIndexVal + ']').addClass("cardBorder");
       }
       else{
-        $("#displayCards").empty();
+        $("#displayCardsLeft").empty();
+        $("#displayCardsRight").empty();
         currentIndexVal--;
         $('*[data-index=' + currentIndexVal + ']').addClass("animated flip cardBorder");
         displayYourCard();
@@ -133,9 +139,11 @@
     firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
       userDirectory = user.uid;
+      console.log(userDirectory + " directory");
       userLogged = true;
       $("#topStuff").append("<p>" + user.email + "</p><p>You are logged in.</p>");
       $("#topStuff").append('<div class="btn btn-warning" id="signOutPeriod">Sign Out</div>');
+
       $("#signOutPeriod").click(function (){
         firebase.auth().signOut().then(function() {
         alert("Sign out Successful");
@@ -149,10 +157,13 @@
       console.log("No user found");
     }
   });
+
   listener.on("child_added", function (snapshot) {
+    // console.log(userDirectory + " test direct");
     firebaseSnap = snapshot.val();
     firesbaseGrabAndDistr();
   });
+
   grabDataAndRun();
   $("#reviewCardSelector").click(function(){
     currentIndexVal = 1;
