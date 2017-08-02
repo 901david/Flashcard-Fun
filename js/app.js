@@ -40,8 +40,8 @@
     $("#displayCardsBox").empty().append('<div class="row"><p class="topDisplayText">Group: ' + cardCreatedArray[currentIndexVal -1].group + '</p><p class="topDisplayTextTwo">Card ' + currentIndexVal + '</p><div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" id="leftSideCards"><div class="btn btn-success topDisplayButt" id="revealFront">Reveal Front of Card</div><div id="displayAnsLeft"></div><div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="displayCardsLeft"><img src="images/indexfront.jpg" alt="Front of Index Card" class="img-responsive imgBorder" id="cardFrontFlip"></div><div class="btn btn-primary" id="revealPrev">Reveal the Previous card</div></div><div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" id="rightSideCards"><div class="btn btn-danger topDisplayButtTwo" id="revealBack">Reveal Back of Card</div><div id="displayAnsRight"></div><div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="displayCardsRight"><img src="images/indexback.jpg" alt="Back of Index Card" class="img-responsive imgBorderTwo" id="cardBackFlip"></div><div class="btn btn-primary" id="revealNext">Reveal the Next card</div></div></div>');
     $("#revealFront").click(function(){
       setTimeout(()=>{
-        if (cardCreatedArray[currentIndexVal-1].cardType === "basic") {
-        $("#displayCardsLeft").prepend("<div class='cardAnswerBoxLeft'><p>" + cardCreatedArray[currentIndexVal -1].front + "</p></div>");
+        if (cardCreatedArray[currentIndexVal-1].type === "basic") {
+        $("#displayCardsLeft").prepend("<div class='cardAnswerBoxLeft'><p class='answerDisplay'>" + cardCreatedArray[currentIndexVal -1].front + "</p></div>");
         }
         else {
           $("#displayCardsLeft").prepend("<div class='cardAnswerBoxLeft'><p class='answerDisplay'>" + (cardCreatedArray[currentIndexVal -1].front).replace(cardCreatedArray[currentIndexVal -1].back, "...") + "</p></div>");
@@ -52,7 +52,7 @@
     $("#revealBack").click(function(){
 
       setTimeout(()=>{
-        if (cardCreatedArray[currentIndexVal-1].cardType === "basic") {
+        if (cardCreatedArray[currentIndexVal-1].type === "basic") {
         $("#displayCardsRight").prepend("<div class='cardAnswerBoxRight'><p class='answerDisplay'>" + cardCreatedArray[currentIndexVal -1].back + "</p></div>");
         }
         else {
