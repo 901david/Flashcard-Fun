@@ -46,8 +46,9 @@
         else {
           $("#displayCardsLeft").prepend("<div class='cardAnswerBoxLeft'><p class='answerDisplay'>" + (cardCreatedArray[currentIndexVal -1].front).replace(cardCreatedArray[currentIndexVal -1].back, "...") + "</p></div>");
           };
-      }, 1000);
+      }, 800);
       $("#cardFrontFlip").addClass("animated flip");
+      setTimeout(()=>{$("#cardFrontFlip").addClass("hide")}, 800);
       });
     $("#revealBack").click(function(){
 
@@ -58,9 +59,11 @@
         else {
           $("#displayCardsRight").prepend("<div class='cardAnswerBoxRight'><p class='answerDisplay'>" + cardCreatedArray[currentIndexVal -1].front + "</p></div");
         }
-      }, 1000);
+      }, 800);
       $("#cardBackFlip").addClass("animated flip");
-    });
+      setTimeout(()=>{$("#cardBackFlip").addClass("hide")}, 800);
+      });
+
     $("#revealNext").click(function(){
       $(".showCard").removeClass("animated flip cardBorder");
       if (currentIndexVal < cardCreatedArray.length){
@@ -167,6 +170,7 @@
   grabDataAndRun();
   $("#reviewCardSelector").click(function(){
     currentIndexVal = 1;
+    $('*[data-index=' + currentIndexVal + ']').addClass("animated flip cardBorder");
     displayYourCard();
   });
 });

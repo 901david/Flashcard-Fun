@@ -108,9 +108,11 @@ label {
 }
 #cardFrontFlip {
   margin-bottom: 3%;
+  margin-top: 3%;
 }
 #cardBackFlip {
   margin-bottom: 3%;
+  margin-top: 3%;
 }
 #introText {
   font-style: italic;
