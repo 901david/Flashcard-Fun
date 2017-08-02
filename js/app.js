@@ -8,7 +8,8 @@
     messagingSenderId: "519025195872"
   };
   firebase.initializeApp(config);
-  var listener = firebase.database().ref(userDirectory);
+  // var listener = firebase.database().ref(userDirectory);
+  var listener = firebase.database().ref();
   var userDirectory = null;
   var currentVariableName;
   var userGroupInput = "";
@@ -33,7 +34,6 @@
       $(".showCard").removeClass("animated flip cardBorder");
       currentIndexVal = $(this).attr("data-index");
       $(this).addClass("animated flip cardBorder");
-      // console.log(currentIndexVal);
       displayYourCard();
       });
   };
