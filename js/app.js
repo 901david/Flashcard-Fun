@@ -9,8 +9,8 @@ var config = {
 };
 firebase.initializeApp(config);
 // var listener = firebase.database().ref(userDirectory);
-var listener = firebase.database().ref();
 var userDirectory = null;
+var listener = firebase.database().ref();
 var currentVariableName;
 var userGroupInput = "";
 var firebaseSnap;
@@ -106,6 +106,16 @@ function BuildArrays (front, back, type, group) {
   this.type = type;
   this.group = group;
 };
+function listenAndSnap () {
+  listener.on("child_added", function (snapshot) {
+    console.log("THIS WORKED");
+    // console.log(userDirectory + " test direct");
+    firebaseSnap = snapshot.val();
+    firesbaseGrabAndDistr();
+  }, function (errorObject) {
+  console.log("The read failed: " + errorObject.code);
+  });
+};
 function grabDataAndRun (){
   $(".clickHerePlease").click(function() {
     let questionArg = $("#frontCardData").val().trim();
@@ -128,9 +138,11 @@ function grabDataAndRun (){
       regGroup.push(currentVariableName);
     };
     whatVariableToUse(questionArg, answerArg, dataArg, userGroupInput);
-
+    cardCreatedArray = [];
+    listenAndSnap();
   });
 };
+
 function firesbaseGrabAndDistr () {
   // let prevKey = null;
   for (key in firebaseSnap) {
@@ -145,11 +157,11 @@ function firesbaseGrabAndDistr () {
 };
 
 $(document).ready(function() {
+  console.log(userDirectory + " directory");
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
       userDirectory = user.uid;
-      console.log(userDirectory + " directory");
-      userLogged = true;
+      listenAndSnap();
       $("#topStuff").append("<p>" + user.email + "</p><p>You are logged in.</p>");
       $("#topStuff").append('<div class="btn btn-warning" id="signOutPeriod">Sign Out</div>');
 
@@ -166,14 +178,7 @@ $(document).ready(function() {
       console.log("No user found");
     }
   });
-  listener.on("child_added", function (snapshot) {
-    console.log("THIS WORKED");
-    // console.log(userDirectory + " test direct");
-    firebaseSnap = snapshot.val();
-    firesbaseGrabAndDistr();
-  }, function (errorObject) {
-  console.log("The read failed: " + errorObject.code);
-  });
+
 
 
   grabDataAndRun();
