@@ -10,7 +10,6 @@ var config = {
 firebase.initializeApp(config);
 // var listener = firebase.database().ref(userDirectory);
 var userDirectory = null;
-var listener = firebase.database().ref();
 var currentVariableName;
 var userGroupInput = "";
 var firebaseSnap;
@@ -22,12 +21,10 @@ function whatDataToUse () {
   for (let i = 0; i < cardCreatedArray.length;i++){
     if (cardCreatedArray[i].group === prevGroup){
       $("#cardStorage").append("<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12'><p class='cardSidebarText'>Card " + (i + 1) + "</p><img data-index='" + (i + 1) + "' class='col-xs-3 col-sm-3 col-md-8 col-lg-8 img-responsive showCard' src='images/indexfront.jpg' alt='Index Card Place holder, click to view.'></div>");
-      console.log(prevGroup);
     }
     else {
       $("#cardStorage").append("<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12'><p class='cardSidebarGroup'>Group: " + cardCreatedArray[i].group + "<p class='cardSidebarText'>Card " + (i + 1) + "</p><img data-index='" + (i + 1) + "' class='col-xs-3 col-sm-3 col-md-8 col-lg-8 img-responsive showCard' src='images/indexfront.jpg' alt='Index Card Place holder, click to view.'></div>");
       prevGroup = cardCreatedArray[i].group;
-      console.log(prevGroup);
     }
   }
   $(".showCard").click(function() {
@@ -50,7 +47,7 @@ function displayYourCard () {
         $("#displayCardsLeft").prepend("<div class='cardAnswerBoxLeft'><p class='answerDisplay'>" + cardCreatedArray[currentIndexVal -1].front + "</p></div>");
       }
       else {
-        $("#displayCardsLeft").prepend("<div class='cardAnswerBoxLeft'><p class='answerDisplay'>" + (cardCreatedArray[currentIndexVal -1].front).replace(cardCreatedArray[currentIndexVal -1].back, "...") + "</p></div>");
+        $("#displayCardsLeft").prepend("<div class='cardAnswerBoxLeft'><p class='answerDisplay'>" + (cardCreatedArray[currentIndexVal -1].front).replace(cardCreatedArray[currentIndexVal -1].back, "______") + "</p></div>");
       };
     }, 800);
     $("#cardFrontFlip").addClass("animated flip");
@@ -85,7 +82,6 @@ function displayYourCard () {
     }
   });
   $("#revealPrev").click(function () {
-    console.log(currentIndexVal);
     $(".showCard").removeClass("animated flip cardBorder");
     if (currentIndexVal <= 1){
       alert("You are already at the beginning.");
@@ -107,9 +103,8 @@ function BuildArrays (front, back, type, group) {
   this.group = group;
 };
 function listenAndSnap () {
-  listener.on("child_added", function (snapshot) {
-    console.log("THIS WORKED");
-    // console.log(userDirectory + " test direct");
+  let listener = firebase.database().ref("/" + userDirectory);
+  listener.once("value", function (snapshot) {
     firebaseSnap = snapshot.val();
     firesbaseGrabAndDistr();
   }, function (errorObject) {
@@ -153,17 +148,13 @@ function firesbaseGrabAndDistr () {
     }
   }
   whatDataToUse();
-  console.log(cardCreatedArray);
 };
 
 $(document).ready(function() {
-  console.log(userDirectory + " directory");
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
-
       userDirectory = user.uid;
-      console.log(userDirectory + " directory");
-      listenAndSnap();
+      listenAndSnap(userDirectory);
       $("#topStuff").append("<p>" + user.email + "</p><p>You are logged in.</p>");
       $("#topStuff").append('<div class="btn btn-warning" id="signOutPeriod">Sign Out</div>');
 
