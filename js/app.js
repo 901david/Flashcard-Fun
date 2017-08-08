@@ -160,7 +160,9 @@ $(document).ready(function() {
   console.log(userDirectory + " directory");
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
+
       userDirectory = user.uid;
+      console.log(userDirectory + " directory");
       listenAndSnap();
       $("#topStuff").append("<p>" + user.email + "</p><p>You are logged in.</p>");
       $("#topStuff").append('<div class="btn btn-warning" id="signOutPeriod">Sign Out</div>');
