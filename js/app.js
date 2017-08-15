@@ -8,15 +8,14 @@ var config = {
   messagingSenderId: "519025195872"
 };
 firebase.initializeApp(config);
-// var listener = firebase.database().ref(userDirectory);
+// variable declarations
 var userDirectory = null;
-var currentVariableName;
-var userGroupInput = "";
 var firebaseSnap;
 var cardCreatedArray = [];
 var currentIndexVal = 1;
-var prevGroup = null;
+// Controls how cards are displayed in groups in sidebar
 function whatDataToUse () {
+  let prevGroup = null;
   $("#cardStorage").empty();
   for (let i = 0; i < cardCreatedArray.length;i++){
     if (cardCreatedArray[i].group === prevGroup){
@@ -36,7 +35,6 @@ function whatDataToUse () {
 };
 // Controls display while reviewing cards
 function displayYourCard () {
-
   $("#displayCardsBox").empty().append('<div id="moreQuestionsPlease"><span class="glyphicon glyphicon-menu-left"></span>Create More Cards</div><div id="displayAnsRight"></div><div class="row"><p class="topDisplayText">Group: ' + cardCreatedArray[currentIndexVal -1].group + '</p><p class="topDisplayTextTwo">Card ' + currentIndexVal + '</p><div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" id="leftSideCards"><div class="btn btn-success topDisplayButt" id="revealFront">Reveal Front of Card</div><div id="displayAnsLeft"></div><div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="displayCardsLeft"><img src="images/indexfront.jpg" alt="Front of Index Card" class="img-responsive imgBorder" id="cardFrontFlip"></div><div class="btn btn-primary" id="revealPrev">Reveal the Previous card</div></div><div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" id="rightSideCards"><div class="btn btn-danger topDisplayButtTwo" id="revealBack">Reveal Back of Card</div><div id="displayAnsRight"></div><div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="displayCardsRight"><img src="images/indexback.jpg" alt="Back of Index Card" class="img-responsive imgBorderTwo" id="cardBackFlip"></div><div class="btn btn-primary" id="revealNext">Reveal the Next card</div></div></div>');
   $("#moreQuestionsPlease").click(()=>{
     window.location.href="mainPage.html";
@@ -96,22 +94,26 @@ function displayYourCard () {
     }
   });
 };
+// Constructor function to build card arrays
 function BuildArrays (front, back, type, group) {
   this.front = front;
   this.back = back;
   this.type = type;
   this.group = group;
 };
+// A one time listener that gives us the cards for that user
 function listenAndSnap () {
   let listener = firebase.database().ref("/" + userDirectory);
   listener.once("value", function (snapshot) {
     firebaseSnap = snapshot.val();
     firesbaseGrabAndDistr();
   }, function (errorObject) {
-  console.log("The read failed: " + errorObject.code);
+    console.log("The read failed: " + errorObject.code);
   });
 };
+// Grabs data from forms and constructs a card and pushes to firebase
 function grabDataAndRun (){
+  let userGroupInput = "";
   $(".clickHerePlease").click(function() {
     let questionArg = $("#frontCardData").val().trim();
     let answerArg = $("#backCardData").val().trim();
@@ -129,7 +131,7 @@ function grabDataAndRun (){
     $("#frontCardData").val("");
     $("#backCardData").val("");
     function whatVariableToUse (frontArg, backArg, typeArg, catArg) {
-      currentVariableName = { front: frontArg, back: backArg, cardType: dataArg, name: catArg };
+      let currentVariableName = { front: frontArg, back: backArg, cardType: dataArg, name: catArg };
       regGroup.push(currentVariableName);
     };
     whatVariableToUse(questionArg, answerArg, dataArg, userGroupInput);
@@ -137,7 +139,7 @@ function grabDataAndRun (){
     listenAndSnap();
   });
 };
-
+// This function takes our firebase snap and appropriatly pushes it to a local variable
 function firesbaseGrabAndDistr () {
   // let prevKey = null;
   for (key in firebaseSnap) {
@@ -149,15 +151,15 @@ function firesbaseGrabAndDistr () {
   }
   whatDataToUse();
 };
-
 $(document).ready(function() {
+  // Determining if we have a logged in user
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
       userDirectory = user.uid;
       listenAndSnap(userDirectory);
       $("#topStuff").append("<p>" + user.email + "</p><p>You are logged in.</p>");
       $("#topStuff").append('<div class="btn btn-warning" id="signOutPeriod">Sign Out</div>');
-
+      // If a user wants to sign out
       $("#signOutPeriod").click(function (){
         firebase.auth().signOut().then(function() {
           alert("Sign out Successful");
@@ -171,9 +173,6 @@ $(document).ready(function() {
       console.log("No user found");
     }
   });
-
-
-
   grabDataAndRun();
   $("#reviewCardSelector").click(function(){
     if (cardCreatedArray.length > 0) {
