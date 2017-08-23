@@ -22,7 +22,7 @@ Some of the aspirations for Version 2 of this app would be, collapsing groups fo
 ## Technologies Used
 * Html
 * Bootstrap
-* Css
+* Css      
 * Animate Css
 * Firebase
 * Photoshop
